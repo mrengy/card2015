@@ -157,6 +157,7 @@ nav a:hover {
 img#face {
     display:block;
     width:100%;
+    position:absolute;
     user-drag: none; 
     -webkit-user-drag: none;
     -webkit-user-select: none;  /* Chrome all / Safari all */
@@ -166,34 +167,48 @@ img#face {
     user-select: none;
 }
 
-#face-container {
+#canvas-container {
     position:relative;
     width:100%;
     max-width:1800px;
+    height:100%;
     margin:0 auto;
     padding:0;
-
-    cursor: url(../img/cursor_eel.png) 52 128, auto;
+    text-align:center;
 }
 
-#face-container.punching {
-    cursor: url(../img/cursor_eel_rotated.png) 127 127, auto;
-}
-
-.spot {
-    opacity: .6;
-    position:absolute;
-    z-index:2;
-    user-drag: none; 
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-
-}
-
-#original-spot, audio {
+audio {
     display:none;
 }
 
+button{
+    display:block;
+    background: none no-repeat scroll 0 0 transparent;
+    background-position:center center;
+    border: medium none;
+    border-spacing: 0;
+    color: #26589F;
+    margin: 30% 40%;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    text-indent: 0;
+    text-align:center;
+    z-index:2;
+    position:absolute;
+}
+
+#play{
+    width:120px;
+    height:120px;
+    background-image:url('../img/play.png');
+
+}
+
+#play:active{
+    background-image:url('../img/play-down.png');
+}
 
 /* ==========================================================================
    Media Queries
