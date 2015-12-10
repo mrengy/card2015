@@ -163,6 +163,11 @@ nav a:hover {
     text-align:center;
 }
 
+canvas{
+    /* position:absolute; */
+    background:#cccccc;
+}
+
 audio {
     display:none;
 }
@@ -173,9 +178,10 @@ audio {
     height:100%;
     position:absolute;
     z-index:2;
+    top:0;
 }
 
-button{
+button#play{
     display:block;
     background:none no-repeat scroll 0 0 transparent;
     background-position:center center;
@@ -190,14 +196,10 @@ button{
     text-indent:0;
     text-align:center;
     z-index:2;
-    /*position:absolute;*/
-}
-
-#play{
     width:120px;
     height:120px;
     background-image:url('../img/play.png');
-
+    /*position:absolute;*/
 }
 
 #play:active{
