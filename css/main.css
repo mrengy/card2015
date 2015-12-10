@@ -153,20 +153,6 @@ nav a:hover {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
-img#face {
-    display:block;
-    width:100%;
-    position:absolute;
-    user-drag: none; 
-    -webkit-user-drag: none;
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;
-    -ms-user-select: none;      /* IE 10+ */
-    -o-user-select: none;
-    user-select: none;
-}
-
 #canvas-container {
     position:relative;
     width:100%;
@@ -196,7 +182,7 @@ button{
     border:medium none;
     border-spacing: 0;
     color:#26589F;
-    margin: 40% auto;
+    margin: 25% auto;
     padding:0;
     text-align:center;
     vertical-align:middle;
