@@ -188,7 +188,7 @@ button#play{
     border:medium none;
     border-spacing: 0;
     color:#26589F;
-    margin: 25% auto;
+    margin: 25% auto 0 auto;
     padding:0;
     text-align:center;
     vertical-align:middle;
