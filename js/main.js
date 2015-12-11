@@ -11,10 +11,10 @@ $( document ).ready(function() {
 
     function respondCanvas(){
         $(canvas).attr('width', $(container).width() );
-        $(canvas).attr('height', $(window).height() );        
-
-        //canvas.attr('height', $(container).height() );
+        $(canvas).attr('height', $(window).height() );
+        //call a function to redraw other content        
     }
-    //initial call
+
+    //initial call to make the canvas respond
     respondCanvas();
 });
