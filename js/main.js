@@ -10,8 +10,10 @@ $( document ).ready(function() {
     $(window).resize(respondCanvas);
 
     function respondCanvas(){
-        canvas.attr('width', $(container).width() );
-        canvas.attr('height', $(container).height() );
+        $(canvas).attr('width', $(container).width() );
+        $(canvas).attr('height', $(window).height() );        
+
+        //canvas.attr('height', $(container).height() );
     }
     //initial call
     respondCanvas();
