@@ -47,7 +47,7 @@ $( document ).ready(function() {
     
     function startDrawing(){
         $('button#play').hide();
-        //intervalId = setInterval(draw, 10);
+        intervalId = setInterval(draw, 10);
         
         //load the wav only if we need it, otherwise load the mp3
         if (typeof window.waapisimContexts != 'undefined'){
@@ -64,17 +64,43 @@ $( document ).ready(function() {
     var plant1y = plant1y0 = 750-481;
     var plant1w;
     var plant1h;
+    var plant1w0;
+    var plant1h0;
     //set natural width and natural height once the image is loaded
     if (plant1.addEventListener){
         plant1.addEventListener('load', function(){
-            plant1w = plant1.naturalWidth;
-            plant1h = plant1.naturalHeight;
+            plant1w = plant1w0 = plant1.naturalWidth;
+            plant1h = plant1w0 = plant1.naturalHeight;
         }, false);
     } else if (plant1.attachEvent){
         plant1.attachEvent('onload', function(){
-            plant1w = plant1.naturalWidth;
-            plant1h = plant1.naturalHeight;
+            plant1w = plant1w0 = plant1.naturalWidth;
+            plant1h = plant1w0 = plant1.naturalHeight;
         });
+    }
+
+    function draw(){
+        frame ++;
+        clear();
+        
+        //draw plant 1
+        if(averageVolume - volumeCenter > 0){
+            //increase width based on volume
+            plant1w = plant1w0 + (averageVolume - volumeCenter);
+            //set height proportionally to width
+            plant1h = (plant1w * (plant1h0 / plant1w0) );
+            
+            //pulse size
+            ctx.save();
+            ctx.translate( plant1x, plant1y );
+            drawCharacter(plant1, 0, -(plant1h-plant1h0), plant1w, plant1h);
+            ctx.restore();
+        } else {
+            //reset width and height to natural size
+            plant1w = plant1w0;
+            plant1h = plant1h0;
+            drawCharacter(plant1, plant1x, plant1y, plant1w, plant1h);
+        }
     }
 
     //reset height and width
