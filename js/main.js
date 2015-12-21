@@ -30,7 +30,7 @@ $( document ).ready(function() {
     
     var increment = 1;
     
-    var volumeCenter = 70;
+    var volumeCenter = 20;
     
     var framesBetweenShift = 30;
 
@@ -70,12 +70,12 @@ $( document ).ready(function() {
     if (plant1.addEventListener){
         plant1.addEventListener('load', function(){
             plant1w = plant1w0 = plant1.naturalWidth;
-            plant1h = plant1w0 = plant1.naturalHeight;
+            plant1h = plant1h0 = plant1.naturalHeight;
         }, false);
     } else if (plant1.attachEvent){
         plant1.attachEvent('onload', function(){
             plant1w = plant1w0 = plant1.naturalWidth;
-            plant1h = plant1w0 = plant1.naturalHeight;
+            plant1h = plant1h0 = plant1.naturalHeight;
         });
     }
 
@@ -100,6 +100,7 @@ $( document ).ready(function() {
             plant1w = plant1w0;
             plant1h = plant1h0;
             drawCharacter(plant1, plant1x, plant1y, plant1w, plant1h);
+            console.log(averageVolume);
         }
     }
 
