@@ -42,6 +42,7 @@ $( document ).ready(function() {
         container = $(canvas).parent();
         WIDTH = canvas.width;
         HEIGHT = canvas.height;
+        respondCanvas();
     }
     
     function startDrawing(){
@@ -170,5 +171,62 @@ $( document ).ready(function() {
 
     //RUN FUNCTIONS
     init();
-    respondCanvas();
+    setupAudioNodes();
+
+    // when the javascript node is called
+    // we use information from the analyzer node
+    // to draw the volume
+    javascriptNode.onaudioprocess = function() {
+
+        // get the average for the first channel
+        var array =  new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(array);
+        averageVolume = getAverageVolume(array);
+
+        // get the average for the second channel
+        var array2 =  new Uint8Array(analyser2.frequencyBinCount);
+        analyser2.getByteFrequencyData(array2);
+        averageVolume2 = getAverageVolume(array2);
+
+        // clear the current state
+        //ctx.clearRect(0, 0, 60, 130);
+    }
+
+    function getAverageVolume(array) {
+        var values = 0;
+        var average;
+
+        var length = array.length;
+
+        // get all the frequency amplitudes
+        for (var i = 0; i < length; i++) {
+            values += array[i];
+        }
+
+        average = values / length;
+        return average;
+    }
+    
+    function getRandomInt (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    //iOS audio hack http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
+    window.addEventListener('touchstart', function() {
+
+        // create empty buffer
+        var buffer = context.createBuffer(1, 1, 22050);
+        var source = context.createBufferSource();
+        source.buffer = buffer;
+
+        // connect to output (your speakers)
+        source.connect(context.destination);
+
+        // play the file
+        source.noteOn(0);
+
+    }, false);
+    //end iOS audio hack
+    
+    $('button#play').on('click', startDrawing );
 });
