@@ -40,11 +40,38 @@ $( document ).ready(function() {
         ctx = canvas.getContext('2d');
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         container = $(canvas).parent();
-        WIDTH = canvas.width;
-        HEIGHT = canvas.height;
         respondCanvas();
-    }
+
+        //define plant1 image
+        window.plant1 = new Image();
+        plant1.src = 'img/plant1.png';
+
+        console.log(plant1x0);
+        console.log(plant1y0);
+        window.plant1w;
+        window.plant1h;
+        window.plant1w0;
+        window.plant1h0;
+        //set natural width and natural height once the image is loaded
+        if (plant1.addEventListener){
+            plant1.addEventListener('load', function(){
+                plant1w = plant1w0 = plant1.naturalWidth;
+                plant1h = plant1h0 = plant1.naturalHeight;
+            }, false);
+        } else if (plant1.attachEvent){
+            plant1.attachEvent('onload', function(){
+                plant1w = plant1w0 = plant1.naturalWidth;
+                plant1h = plant1h0 = plant1.naturalHeight;
+            });
+        }
+    } //end init
     
+    function positionPlant1(){
+        //reset x and y for plant 1
+        window.plant1x = window.plant1x0 = WIDTH / 2;
+        window.plant1y = window.plant1y0 = HEIGHT / 2;        
+    }
+
     function startDrawing(){
         $('button#play').hide();
         intervalId = setInterval(draw, 10);
@@ -57,27 +84,7 @@ $( document ).ready(function() {
         }
     }
 
-    //define plant1 image
-    var plant1 = new Image();
-    plant1.src = 'img/plant1.png';
-    var plant1x = plant1x0 = 274;
-    var plant1y = plant1y0 = 750-481;
-    var plant1w;
-    var plant1h;
-    var plant1w0;
-    var plant1h0;
-    //set natural width and natural height once the image is loaded
-    if (plant1.addEventListener){
-        plant1.addEventListener('load', function(){
-            plant1w = plant1w0 = plant1.naturalWidth;
-            plant1h = plant1h0 = plant1.naturalHeight;
-        }, false);
-    } else if (plant1.attachEvent){
-        plant1.attachEvent('onload', function(){
-            plant1w = plant1w0 = plant1.naturalWidth;
-            plant1h = plant1h0 = plant1.naturalHeight;
-        });
-    }
+    
 
     function draw(){
         frame ++;
@@ -100,7 +107,7 @@ $( document ).ready(function() {
             plant1w = plant1w0;
             plant1h = plant1h0;
             drawCharacter(plant1, plant1x, plant1y, plant1w, plant1h);
-            console.log(averageVolume);
+            //console.log(averageVolume);
         }
     }
 
@@ -110,7 +117,13 @@ $( document ).ready(function() {
     function respondCanvas(){
         $(canvas).attr('width', $(container).width() );
         $(canvas).attr('height', $(window).height() );
-        //call a function to redraw other content        
+
+        //reset canvas width and height
+        WIDTH = canvas.width;
+        HEIGHT = canvas.height;
+
+        positionPlant1();
+
     }
 
     function drawCharacter(name, x, y, w, h){
