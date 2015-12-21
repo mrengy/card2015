@@ -31,12 +31,30 @@ $( document ).ready(function() {
     var framesBetweenShift = 30;
 
     //set canvas context
-        //var canvas = (typeof(G_vmlCanvasManager) != 'undefined') ? G_vmlCanvasManager.initElement($("canvas#card")[0]) : $("canvas#card")[0];
-        var canvas = $('canvas#card')[0];
+        var canvas = (typeof(G_vmlCanvasManager) != 'undefined') ? G_vmlCanvasManager.initElement($("canvas#card")[0]) : $("canvas#card")[0];
         ctx = canvas.getContext('2d');
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         var container = $(canvas).parent();
-        
+    
+    var plant1 = new Image();
+    plant1.src = 'img/plant1.png';
+    var bx = bx0 = 274;
+    var by = by0 = 750-481;
+    var bw;
+    var bh;
+    //set natural width and natural height once the image is loaded
+    if (plant1.addEventListener){
+        plant1.addEventListener('load', function(){
+            bw = plant1.naturalWidth;
+            bh = plant1.naturalHeight;
+        }, false);
+    } else if (plant1.attachEvent){
+        plant1.attachEvent('onload', function(){
+            bw = plant1.naturalWidth;
+            bh = plant1.naturalHeight;
+        });
+    }
+
     //reset height and width
     $(window).resize(respondCanvas);
 
