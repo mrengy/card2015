@@ -46,8 +46,6 @@ $( document ).ready(function() {
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         container = $(canvas).parent();
 
-        
-
         respondCanvas();
 
         //define plant1 image
