@@ -70,8 +70,6 @@ $( document ).ready(function() {
         window.sun0 = new Image();
         sun0.src = 'img/sun0.png';
 
-        console.log(sun0x0);
-        console.log(sun0y0);
         window.sun0w;
         window.sun0h;
         window.sun0w0;
@@ -86,6 +84,48 @@ $( document ).ready(function() {
             sun0.attachEvent('onload', function(){
                 sun0w = sun0w0 = sun0.naturalWidth/2;
                 sun0h = sun0h0 = sun0.naturalHeight/2;
+            });
+        }
+
+        //define sun1 core image
+        window.sun1 = new Image();
+        sun1.src = 'img/sun1.png';
+
+        window.sun1w;
+        window.sun1h;
+        window.sun1w0;
+        window.sun1h0;
+        //set natural width and natural height once the image is loaded
+        if (sun1.addEventListener){
+            sun1.addEventListener('load', function(){
+                sun1w = sun1w0 = sun1.naturalWidth/2;
+                sun1h = sun1h0 = sun1.naturalHeight/2;
+            }, false);
+        } else if (sun1.attachEvent){
+            sun1.attachEvent('onload', function(){
+                sun1w = sun1w0 = sun1.naturalWidth/2;
+                sun1h = sun1h0 = sun1.naturalHeight/2;
+            });
+        }
+
+        //define sun2 core image
+        window.sun2 = new Image();
+        sun2.src = 'img/sun2.png';
+
+        window.sun2w;
+        window.sun2h;
+        window.sun2w0;
+        window.sun2h0;
+        //set natural width and natural height once the image is loaded
+        if (sun2.addEventListener){
+            sun2.addEventListener('load', function(){
+                sun2w = sun2w0 = sun2.naturalWidth/2;
+                sun2h = sun2h0 = sun2.naturalHeight/2;
+            }, false);
+        } else if (sun2.attachEvent){
+            sun2.attachEvent('onload', function(){
+                sun2w = sun2w0 = sun2.naturalWidth/2;
+                sun2h = sun2h0 = sun2.naturalHeight/2;
             });
         }
 
@@ -106,6 +146,24 @@ $( document ).ready(function() {
         //convert to percentages
         window.sun0x = (window.sun0x/100)*WIDTH;
         window.sun0y = (window.sun0y/100)*HEIGHT;
+    }
+    function positionSun1(){
+        //reset x and y for sun 0
+        window.sun1x = window.sun1x0 = 0;
+        window.sun1y = window.sun1y0 = 0;
+
+        //convert to percentages
+        window.sun1x = (window.sun1x/100)*WIDTH;
+        window.sun1y = (window.sun1y/100)*HEIGHT;
+    }
+    function positionSun2(){
+        //reset x and y for sun 0
+        window.sun2x = window.sun2x0 = 0;
+        window.sun2y = window.sun2y0 = 0;
+
+        //convert to percentages
+        window.sun2x = (window.sun2x/100)*WIDTH;
+        window.sun2y = (window.sun2y/100)*HEIGHT;
     }
 
     function startDrawing(){
@@ -128,6 +186,8 @@ $( document ).ready(function() {
         
         //draw sun
         drawCharacter(sun0, sun0x, sun0y, sun0w, sun0h);
+        drawCharacter(sun1, sun1x, sun1y, sun1w, sun1h);
+        drawCharacter(sun2, sun2x, sun2y, sun2w, sun2h);
 
         /*
         //draw plant 1
@@ -165,6 +225,8 @@ $( document ).ready(function() {
 
         positionPlant1();
         positionSun0();
+        positionSun1();
+        positionSun2();
 
     }
 
