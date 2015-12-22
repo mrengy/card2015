@@ -45,9 +45,10 @@ $( document ).ready(function() {
         //define plant1 image
         window.plant1 = new Image();
         plant1.src = 'img/plant1.png';
-
+        /*
         console.log(plant1x0);
         console.log(plant1y0);
+        */
         window.plant1w;
         window.plant1h;
         window.plant1w0;
@@ -55,21 +56,56 @@ $( document ).ready(function() {
         //set natural width and natural height once the image is loaded
         if (plant1.addEventListener){
             plant1.addEventListener('load', function(){
-                plant1w = plant1w0 = plant1.naturalWidth;
-                plant1h = plant1h0 = plant1.naturalHeight;
+                plant1w = plant1w0 = plant1.naturalWidth/2;
+                plant1h = plant1h0 = plant1.naturalHeight/2;
             }, false);
         } else if (plant1.attachEvent){
             plant1.attachEvent('onload', function(){
-                plant1w = plant1w0 = plant1.naturalWidth;
-                plant1h = plant1h0 = plant1.naturalHeight;
+                plant1w = plant1w0 = plant1.naturalWidth/2;
+                plant1h = plant1h0 = plant1.naturalHeight/2;
             });
         }
+
+        //define sun0 core image
+        window.sun0 = new Image();
+        sun0.src = 'img/sun0.png';
+
+        console.log(sun0x0);
+        console.log(sun0y0);
+        window.sun0w;
+        window.sun0h;
+        window.sun0w0;
+        window.sun0h0;
+        //set natural width and natural height once the image is loaded
+        if (sun0.addEventListener){
+            sun0.addEventListener('load', function(){
+                sun0w = sun0w0 = sun0.naturalWidth/2;
+                sun0h = sun0h0 = sun0.naturalHeight/2;
+            }, false);
+        } else if (sun0.attachEvent){
+            sun0.attachEvent('onload', function(){
+                sun0w = sun0w0 = sun0.naturalWidth/2;
+                sun0h = sun0h0 = sun0.naturalHeight/2;
+            });
+        }
+
+
     } //end init
     
+    //relative position functions
     function positionPlant1(){
         //reset x and y for plant 1
         window.plant1x = window.plant1x0 = WIDTH / 2;
         window.plant1y = window.plant1y0 = HEIGHT / 2;        
+    }
+    function positionSun0(){
+        //reset x and y for sun 0
+        window.sun0x = window.sun0x0 = 0;
+        window.sun0y = window.sun0y0 = 0;
+
+        //convert to percentages
+        window.sun0x = (window.sun0x/100)*WIDTH;
+        window.sun0y = (window.sun0y/100)*HEIGHT;
     }
 
     function startDrawing(){
@@ -90,6 +126,10 @@ $( document ).ready(function() {
         frame ++;
         clear();
         
+        //draw sun
+        drawCharacter(sun0, sun0x, sun0y, sun0w, sun0h);
+
+        /*
         //draw plant 1
         if(averageVolume - volumeCenter > 0){
             //increase width based on volume
@@ -109,6 +149,7 @@ $( document ).ready(function() {
             drawCharacter(plant1, plant1x, plant1y, plant1w, plant1h);
             //console.log(averageVolume);
         }
+        */
     }
 
     //reset height and width
@@ -123,6 +164,7 @@ $( document ).ready(function() {
         HEIGHT = canvas.height;
 
         positionPlant1();
+        positionSun0();
 
     }
 
