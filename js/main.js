@@ -27,18 +27,17 @@ $( document ).ready(function() {
     var HEIGHT;
     var intervalId = 0;
     var frame = 0;
-    
     var increment = 1;
-    
     var volumeCenter = 20;
-    
     var framesBetweenShift = 30;
+    var imgWidth;
+    var imgHeight;
 
     //character objects
     //define sun images
-        var sun0 = new Character ('sun0', 1, 0);
-        var sun1 = new Character ('sun1', 1, 0);
-        var sun2 = new Character('sun2', 1, 0);
+    var sun0 = new Character('sun0', 1, 0);
+    var sun1 = new Character('sun1', 1, 0);
+    var sun2 = new Character('sun2', 1, 0);
 
     function init(){
     //set canvas context
@@ -163,22 +162,36 @@ $( document ).ready(function() {
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
 
+        console.log(this.imageObject);
+        console.log(this.imageObject.src);
+
         //set natural width and natural height once the image is loaded
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                this['w'] = this['w0'] = this.naturalWidth/2;
-                this['h'] = this['h0'] = this.naturalHeight/2;
-            }, false);
+                console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
+                imgWidth = this.naturalWidth/2;
+                imgHeight = this.naturalHeight/2;
+                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+imgWidth);
+                //console.log(imgWidth);
+            });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                this['w']= this['w0'] = this.naturalWidth/2;
-                this['h']= this['h0'] = this.naturalHeight/2;
+                imgWidth = this.naturalWidth/2;
+                imgHeight = this.naturalHeight/2;
             });
         }
+        //set natural width and natural height to object
+        this['w'] = this['w0'] = imgWidth;
+        this['h'] = this['h0'] = imgHeight;
 
         //set initial x and y position
         this['x'] = x;
         this['y'] = y;
+        
+        console.log('imgWidth inside character constructor = '+imgWidth);
+        /*
+        console.log(this['w']);
+        */
     }
 
     //relative position functions
@@ -188,22 +201,14 @@ $( document ).ready(function() {
         window.plant1y = window.plant1y0 = HEIGHT / 2;        
     }
     function positionSun0(){
-        //reset x and y for sun 0
-        window.sun0x = window.sun0x0 = 0;
-        window.sun0y = window.sun0y0 = 0;
-
         //convert to percentages
-        window.sun0x = (window.sun0x/100)*WIDTH;
-        window.sun0y = (window.sun0y/100)*HEIGHT;
+        sun0['x'] = (sun0['x']/100)*WIDTH;
+        sun0['y'] = (sun0['y']/100)*HEIGHT;
     }
     function positionSun1(){
-        //reset x and y for sun 0
-        window.sun1x = window.sun1x0 = 0;
-        window.sun1y = window.sun1y0 = 0;
-
         //convert to percentages
-        window.sun1x = (window.sun1x/100)*WIDTH;
-        window.sun1y = (window.sun1y/100)*HEIGHT;
+        sun1['x'] = (sun1['x']/100)*WIDTH;
+        sun1['y'] = (sun1['y']/100)*HEIGHT;
     }
     function positionSun2(){
         //convert to percentages
@@ -214,7 +219,12 @@ $( document ).ready(function() {
     function startDrawing(){
         $('button#play').hide();
         intervalId = setInterval(draw, 10);
-        
+
+        /*
+        console.log(sun0);
+        console.log(sun0['x'], sun0['y'], sun0['w'], sun0['h']);
+        */
+
         //load the wav only if we need it, otherwise load the mp3
         if (typeof window.waapisimContexts != 'undefined'){
             loadSound("audio/home-grown-tomatoes.wav");
@@ -230,9 +240,9 @@ $( document ).ready(function() {
         clear();
         
         //draw sun
-        drawCharacter(sun0, sun0['x'], sun0['y'], sun0['w'], sun0['h']);
-        drawCharacter(sun1, sun1['x'], sun1['y'], sun1['w'], sun1['h']);
-        drawCharacter(sun2, sun2['x'], sun2['y'], sun2['w'], sun2['h']);
+        drawCharacter(sun0.imageObject, sun0['x'], sun0['y'], sun0['w'], sun0['h']);
+        drawCharacter(sun1.imageObject, sun1['x'], sun1['y'], sun1['w'], sun1['h']);
+        drawCharacter(sun2.imageObject, sun2['x'], sun2['y'], sun2['w'], sun2['h']);
         /*
         //draw plant 1
         if(averageVolume - volumeCenter > 0){
@@ -275,7 +285,7 @@ $( document ).ready(function() {
     }
 
     function drawCharacter(name, x, y, w, h){
-        ctx.drawImage(name.imageObject, x, y, w, h);
+        ctx.drawImage(name, x, y, w, h);
     }
     
     function clear() {
