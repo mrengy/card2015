@@ -34,12 +34,19 @@ $( document ).ready(function() {
     
     var framesBetweenShift = 30;
 
+    //character objects
+    //define sun2 image
+        var sun2 = new Character('sun2', 1, 0);
+
     function init(){
     //set canvas context
         canvas = (typeof(G_vmlCanvasManager) != 'undefined') ? G_vmlCanvasManager.initElement($("canvas#card")[0]) : $("canvas#card")[0];
         ctx = canvas.getContext('2d');
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         container = $(canvas).parent();
+
+        
+
         respondCanvas();
 
         //define plant1 image
@@ -108,30 +115,69 @@ $( document ).ready(function() {
             });
         }
 
-        //define sun2 core image
-        window.sun2 = new Image();
-        sun2.src = 'img/sun2.png';
-
-        window.sun2w;
-        window.sun2h;
-        window.sun2w0;
-        window.sun2h0;
-        //set natural width and natural height once the image is loaded
-        if (sun2.addEventListener){
-            sun2.addEventListener('load', function(){
-                sun2w = sun2w0 = sun2.naturalWidth/2;
-                sun2h = sun2h0 = sun2.naturalHeight/2;
-            }, false);
-        } else if (sun2.attachEvent){
-            sun2.attachEvent('onload', function(){
-                sun2w = sun2w0 = sun2.naturalWidth/2;
-                sun2h = sun2h0 = sun2.naturalHeight/2;
-            });
-        }
+        
 
 
     } //end init
     
+    //define images
+    /*
+    function defineImage(name, x, y){
+        window[name] = new Image();
+        name.src = 'img/'+name+'.png';
+        name['w'];
+        name['h'];
+        name['w0'];
+        name['h0'];
+        //reset x and y for sun 0
+        window[name]['x'] = window[name]['x0'] = x;
+        name['y'] = name['y0'] = y;
+
+        
+        console.log(name);
+        console.log(name.src);
+        console.log(name['x']);
+        console.log(name['y']);
+        
+        //set natural width and natural height once the image is loaded
+        if (name.addEventListener){
+            name.addEventListener('load', function(){
+                name[w] = name[w0] = name.naturalWidth/2;
+                name[h] = name[h0] = name.naturalHeight/2;
+            }, false);
+        } else if (name.attachEvent){
+            name.attachEvent('onload', function(){
+                name[w] = name[w0] = name.naturalWidth/2;
+                name[h] = name[h0] = name.naturalHeight/2;
+            });
+        }
+    }
+    */
+    function Character(name, x, y){
+        //this['name'] = name; //may cause conflict with "name"
+
+        //define the image object within the Character
+        this.imageObject = new Image();
+        this.imageObject.src = 'img/'+name+'.png';
+
+        //set natural width and natural height once the image is loaded
+        if (this.imageObject.addEventListener){
+            this.imageObject.addEventListener('load', function(){
+                this['w'] = this['w0'] = this.naturalWidth/2;
+                this['h'] = this['h0'] = this.naturalHeight/2;
+            }, false);
+        } else if (this.imageObject.attachEvent){
+            this.imageObject.attachEvent('onload', function(){
+                this['w']= this['w0'] = this.naturalWidth/2;
+                this['h']= this['h0'] = this.naturalHeight/2;
+            });
+        }
+
+        //set initial x and y position
+        this['x'] = x;
+        this['y'] = y;
+    }
+
     //relative position functions
     function positionPlant1(){
         //reset x and y for plant 1
@@ -157,13 +203,9 @@ $( document ).ready(function() {
         window.sun1y = (window.sun1y/100)*HEIGHT;
     }
     function positionSun2(){
-        //reset x and y for sun 0
-        window.sun2x = window.sun2x0 = 0;
-        window.sun2y = window.sun2y0 = 0;
-
         //convert to percentages
-        window.sun2x = (window.sun2x/100)*WIDTH;
-        window.sun2y = (window.sun2y/100)*HEIGHT;
+        sun2['x'] = (sun2['x']/100)*WIDTH;
+        sun2['y'] = (sun2['y']/100)*HEIGHT;
     }
 
     function startDrawing(){
@@ -187,8 +229,7 @@ $( document ).ready(function() {
         //draw sun
         drawCharacter(sun0, sun0x, sun0y, sun0w, sun0h);
         drawCharacter(sun1, sun1x, sun1y, sun1w, sun1h);
-        drawCharacter(sun2, sun2x, sun2y, sun2w, sun2h);
-
+        drawCharacter(sun2, sun2['x'], sun2['y'], sun2['w'], sun2['h']);
         /*
         //draw plant 1
         if(averageVolume - volumeCenter > 0){
@@ -231,7 +272,7 @@ $( document ).ready(function() {
     }
 
     function drawCharacter(name, x, y, w, h){
-        ctx.drawImage(name, x, y, w, h);
+        ctx.drawImage(name.imageObject, x, y, w, h);
     }
     
     function clear() {
