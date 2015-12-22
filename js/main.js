@@ -156,8 +156,6 @@ $( document ).ready(function() {
     }
     */
     function Character(name, x, y){
-        //this['name'] = name; //may cause conflict with "name"
-
         //define the image object within the Character
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
@@ -169,26 +167,26 @@ $( document ).ready(function() {
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
                 console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
-                imgWidth = this.naturalWidth/2;
-                imgHeight = this.naturalHeight/2;
-                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+imgWidth);
+                window.imgWidth = this.naturalWidth/2;
+                window.imgHeight = this.naturalHeight/2;
+                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
                 //console.log(imgWidth);
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                imgWidth = this.naturalWidth/2;
-                imgHeight = this.naturalHeight/2;
+                window.imgWidth = this.naturalWidth/2;
+                window.imgHeight = this.naturalHeight/2;
             });
         }
         //set natural width and natural height to object
-        this['w'] = this['w0'] = imgWidth;
-        this['h'] = this['h0'] = imgHeight;
+        this['w'] = this['w0'] = window.imgWidth;
+        this['h'] = this['h0'] = window.imgHeight;
 
         //set initial x and y position
         this['x'] = x;
         this['y'] = y;
         
-        console.log('imgWidth inside character constructor = '+imgWidth);
+        console.log('imgWidth inside character constructor = '+window.imgWidth);
         /*
         console.log(this['w']);
         */
