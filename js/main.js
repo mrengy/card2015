@@ -35,7 +35,9 @@ $( document ).ready(function() {
     var framesBetweenShift = 30;
 
     //character objects
-    //define sun2 image
+    //define sun images
+        var sun0 = new Character ('sun0', 1, 0);
+        var sun1 = new Character ('sun1', 1, 0);
         var sun2 = new Character('sun2', 1, 0);
 
     function init(){
@@ -73,6 +75,7 @@ $( document ).ready(function() {
             });
         }
 
+        /*
         //define sun0 core image
         window.sun0 = new Image();
         sun0.src = 'img/sun0.png';
@@ -114,7 +117,7 @@ $( document ).ready(function() {
                 sun1h = sun1h0 = sun1.naturalHeight/2;
             });
         }
-
+        */
         
 
 
@@ -227,8 +230,8 @@ $( document ).ready(function() {
         clear();
         
         //draw sun
-        drawCharacter(sun0, sun0x, sun0y, sun0w, sun0h);
-        drawCharacter(sun1, sun1x, sun1y, sun1w, sun1h);
+        drawCharacter(sun0, sun0['x'], sun0['y'], sun0['w'], sun0['h']);
+        drawCharacter(sun1, sun1['x'], sun1['y'], sun1['w'], sun1['h']);
         drawCharacter(sun2, sun2['x'], sun2['y'], sun2['w'], sun2['h']);
         /*
         //draw plant 1
