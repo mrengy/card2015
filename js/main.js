@@ -215,10 +215,9 @@ $( document ).ready(function() {
     function startDrawing(){
         $('button#play').hide();
         intervalId = setInterval(draw, 10);
-
         /*
         console.log(sun0);
-        console.log(sun0['x'], sun0['y'], sun0['w'], sun0['h']);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     console.log(sun0['x'], sun0['y'], sun0['w'], sun0['h']);
         */
 
         //load the wav only if we need it, otherwise load the mp3
