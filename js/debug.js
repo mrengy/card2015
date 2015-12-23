@@ -6,7 +6,7 @@ window.character = [];
 window.characterPosition;
 
 $( document ).ready(function() {
-    var sun0 = new Character('data:text/javascript;base64,', 1, 0);
+    var sun0 = new Character('data:text/javascript;base64,', 12, 12);
 
     function init(){
         //set canvas context
@@ -32,8 +32,8 @@ $( document ).ready(function() {
                 window.imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
-                this['w'] = this['w0'] = window.imgWidth;
-                this['h'] = this['h0'] = window.imgHeight;
+                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
                 window.character[characterPosition]['imageObject']['x'] = x;
@@ -48,8 +48,8 @@ $( document ).ready(function() {
                 window.imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
-                this['w'] = this['w0'] = window.imgWidth;
-                this['h'] = this['h0'] = window.imgHeight;
+                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
                 window.character[characterPosition]['imageObject']['x'] = x;
@@ -74,6 +74,6 @@ $( document ).ready(function() {
     console.log(window.character[0]['imageObject']['w']);
     console.log(window.character[0]['imageObject']['h']);
 
-    drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],10,10);
+    //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],10,10);
     drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
 });
