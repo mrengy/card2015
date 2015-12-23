@@ -21,14 +21,8 @@ $( document ).ready(function() {
         this.imageObject = new Image();
         this.imageObject.src = name+'iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAW0lEQVR42mL8//8/AzpgZGTcC6KBcs5wMRwK/0MVMsLEmLAoEmXAApiwiKUhaRJCltgLsQVsWwIQ/wTx0fBeRigD7B6Y24i1mj4Kn4KI7Uie2Y7FI8+B2AMgwABjRynfWgpcxQAAAABJRU5ErkJggg==';
 
-        console.log(this.imageObject);
-        console.log(this.imageObject.src);
-
         window.character.push(this);
         window.characterPosition = window.character.indexOf(this);
-        console.log(window.character[characterPosition]);
-        console.log(window.character[characterPosition]['imageObject']);
-        //window.character[name] = this;
 
         //set natural width and natural height once the image is loaded
         if (this.imageObject.addEventListener){
@@ -36,33 +30,31 @@ $( document ).ready(function() {
                 console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
-                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
+
                 //set natural width and natural height to object
                 this['w'] = this['w0'] = window.imgWidth;
                 this['h'] = this['h0'] = window.imgHeight;
 
                 //set initial x and y position
-                this['x'] = x;
-                this['y'] = y;
-                console.log('w variable for this object inside event listener = '+this['w']);
-                console.log('w variable for the sun0 object inside imageObject event listener = '+window.character[characterPosition]['imageObject']['w'])
-                window.character[characterPosition]['w'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['x'] = x;
+                window.character[characterPosition]['imageObject']['y'] = y;
+                console.log('w property for the sun0 object inside imageObject event listener = '+window.character[characterPosition]['imageObject']['w'])
+                window.character[characterPosition]['imageObject']['w'] = window.imgWidth;
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
                 console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
-                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
+
                 //set natural width and natural height to object
                 this['w'] = this['w0'] = window.imgWidth;
                 this['h'] = this['h0'] = window.imgHeight;
 
                 //set initial x and y position
-                this['x'] = x;
-                this['y'] = y;
-                console.log('w variable for this object inside event listener = '+this['w']);
-                console.log('w variable for the sun0 object inside imageObject event listener = '+sun0['imageObject']['w'])
+                window.character[characterPosition]['imageObject']['x'] = x;
+                window.character[characterPosition]['imageObject']['y'] = y;
+                console.log('w property for the sun0 object inside imageObject event listener = '+sun0['imageObject']['w'])
                 window.character[characterPosition]['w'] = window.imgWidth;
                 
             });
@@ -73,7 +65,7 @@ $( document ).ready(function() {
         ctx.drawImage(name, x, y, w, h);
     }
 
-    console.log('sun0 w value outside consturctor = '+window.character[characterPosition]['imageObject']['w']);
+    console.log('w property for the sun0 object outside consturctor = '+window.character[characterPosition]['imageObject']['w']);
     
     init();
     console.log(window.character[0]['imageObject']);
