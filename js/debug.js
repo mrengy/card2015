@@ -1,6 +1,10 @@
 window.imgWidth;
 window.imgHeight;
 
+//array to hold character objects
+window.character = [];
+window.characterPosition;
+
 $( document ).ready(function() {
     var sun0 = new Character('data:text/javascript;base64,', 1, 0);
 
@@ -20,6 +24,12 @@ $( document ).ready(function() {
         console.log(this.imageObject);
         console.log(this.imageObject.src);
 
+        window.character.push(this);
+        window.characterPosition = window.character.indexOf(this);
+        console.log(window.character[characterPosition]);
+        console.log(window.character[characterPosition]['imageObject']);
+        //window.character[name] = this;
+
         //set natural width and natural height once the image is loaded
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
@@ -36,6 +46,7 @@ $( document ).ready(function() {
                 this['y'] = y;
                 console.log('w variable for this object inside event listener = '+this['w']);
                 console.log('w variable for the sun0 object inside imageObject event listener = '+sun0['imageObject']['w'])
+                window.charater[characterPosition]['w'] = window.imgWidth;
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -47,6 +58,6 @@ $( document ).ready(function() {
             });
         }
     } //end object constructor
-    console.log
+    console.log('sun0 w value outside consturctor = '+window.character[characterPosition]['w']);
     init();
 });
