@@ -46,18 +46,17 @@ $( document ).ready(function() {
                 this['y'] = y;
                 console.log('w variable for this object inside event listener = '+this['w']);
                 console.log('w variable for the sun0 object inside imageObject event listener = '+sun0['imageObject']['w'])
-                window.charater[characterPosition]['w'] = window.imgWidth;
+                window.character[characterPosition]['w'] = window.imgWidth;
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
                 console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
-                console.log('this imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
                 
             });
         }
     } //end object constructor
-    console.log('sun0 w value outside consturctor = '+window.character[characterPosition]['w']);
+    console.log('sun0 w value outside consturctor = '+window.character[characterPosition]['imageObject']['w']);
     init();
 });
