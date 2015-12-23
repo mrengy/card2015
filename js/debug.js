@@ -40,6 +40,8 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['y'] = y;
                 console.log('w property for the sun0 object inside imageObject event listener = '+window.character[characterPosition]['imageObject']['w'])
                 window.character[characterPosition]['imageObject']['w'] = window.imgWidth;
+
+                drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -56,7 +58,8 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['y'] = y;
                 console.log('w property for the sun0 object inside imageObject event listener = '+sun0['imageObject']['w'])
                 window.character[characterPosition]['w'] = window.imgWidth;
-                
+
+                drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         }
     } //end object constructor
@@ -68,12 +71,4 @@ $( document ).ready(function() {
     console.log('w property for the sun0 object outside consturctor = '+window.character[characterPosition]['imageObject']['w']);
     
     init();
-    console.log(window.character[0]['imageObject']);
-    console.log(window.character[0]['imageObject']['x']);
-    console.log(window.character[0]['imageObject']['y']);
-    console.log(window.character[0]['imageObject']['w']);
-    console.log(window.character[0]['imageObject']['h']);
-
-    //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],10,10);
-    drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
 });
