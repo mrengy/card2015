@@ -62,7 +62,10 @@ $( document ).ready(function() {
         window.character.push(this);
         window.characterPosition = window.character.indexOf(this);
 
+        var imagesReady = false;
+
         //set natural width and natural height once the image is loaded
+        //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
                 window.imgWidth = this.naturalWidth/2;
@@ -78,6 +81,12 @@ $( document ).ready(function() {
 
                 //set loaded property for the object once loading is done
                 window.character[characterPosition]['imageObject']['loaded'] = true;
+
+                function imageLoaded(element, index, array){
+                    return element['imageObject']['loaded'] == true;
+                }
+
+                console.log(character.every(imageLoaded));
 
                 $('button#play').show();
 
