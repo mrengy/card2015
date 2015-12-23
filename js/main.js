@@ -33,192 +33,82 @@ $( document ).ready(function() {
     var imgWidth;
     var imgHeight;
 
-    //character objects
-    //define sun images
-    var sun0 = new Character('sun0', 1, 0);
-    var sun1 = new Character('sun1', 1, 0);
-    var sun2 = new Character('sun2', 1, 0);
+    //reusable character variables
+    window.imgWidth;
+    window.imgHeight;
+    window.character = [];
+    window.characterPosition;
+
+    //load images
+    var sun0 = new Character('sun0',0,0);
 
     function init(){
-    //set canvas context
+
+        //set canvas context
         canvas = (typeof(G_vmlCanvasManager) != 'undefined') ? G_vmlCanvasManager.initElement($("canvas#card")[0]) : $("canvas#card")[0];
         ctx = canvas.getContext('2d');
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         container = $(canvas).parent();
-
-        respondCanvas();
-
-        //define plant1 image
-        window.plant1 = new Image();
-        plant1.src = 'img/plant1.png';
-        /*
-        console.log(plant1x0);
-        console.log(plant1y0);
-        */
-        window.plant1w;
-        window.plant1h;
-        window.plant1w0;
-        window.plant1h0;
-        //set natural width and natural height once the image is loaded
-        if (plant1.addEventListener){
-            plant1.addEventListener('load', function(){
-                plant1w = plant1w0 = plant1.naturalWidth/2;
-                plant1h = plant1h0 = plant1.naturalHeight/2;
-            }, false);
-        } else if (plant1.attachEvent){
-            plant1.attachEvent('onload', function(){
-                plant1w = plant1w0 = plant1.naturalWidth/2;
-                plant1h = plant1h0 = plant1.naturalHeight/2;
-            });
-        }
-
-        /*
-        //define sun0 core image
-        window.sun0 = new Image();
-        sun0.src = 'img/sun0.png';
-
-        window.sun0w;
-        window.sun0h;
-        window.sun0w0;
-        window.sun0h0;
-        //set natural width and natural height once the image is loaded
-        if (sun0.addEventListener){
-            sun0.addEventListener('load', function(){
-                sun0w = sun0w0 = sun0.naturalWidth/2;
-                sun0h = sun0h0 = sun0.naturalHeight/2;
-            }, false);
-        } else if (sun0.attachEvent){
-            sun0.attachEvent('onload', function(){
-                sun0w = sun0w0 = sun0.naturalWidth/2;
-                sun0h = sun0h0 = sun0.naturalHeight/2;
-            });
-        }
-
-        //define sun1 core image
-        window.sun1 = new Image();
-        sun1.src = 'img/sun1.png';
-
-        window.sun1w;
-        window.sun1h;
-        window.sun1w0;
-        window.sun1h0;
-        //set natural width and natural height once the image is loaded
-        if (sun1.addEventListener){
-            sun1.addEventListener('load', function(){
-                sun1w = sun1w0 = sun1.naturalWidth/2;
-                sun1h = sun1h0 = sun1.naturalHeight/2;
-            }, false);
-        } else if (sun1.attachEvent){
-            sun1.attachEvent('onload', function(){
-                sun1w = sun1w0 = sun1.naturalWidth/2;
-                sun1h = sun1h0 = sun1.naturalHeight/2;
-            });
-        }
-        */
-        
-
+        WIDTH = canvas.width;
+        HEIGHT = canvas.height;
 
     } //end init
-    
-    //define images
-    /*
-    function defineImage(name, x, y){
-        window[name] = new Image();
-        name.src = 'img/'+name+'.png';
-        name['w'];
-        name['h'];
-        name['w0'];
-        name['h0'];
-        //reset x and y for sun 0
-        window[name]['x'] = window[name]['x0'] = x;
-        name['y'] = name['y0'] = y;
 
-        
-        console.log(name);
-        console.log(name.src);
-        console.log(name['x']);
-        console.log(name['y']);
-        
-        //set natural width and natural height once the image is loaded
-        if (name.addEventListener){
-            name.addEventListener('load', function(){
-                name[w] = name[w0] = name.naturalWidth/2;
-                name[h] = name[h0] = name.naturalHeight/2;
-            }, false);
-        } else if (name.attachEvent){
-            name.attachEvent('onload', function(){
-                name[w] = name[w0] = name.naturalWidth/2;
-                name[h] = name[h0] = name.naturalHeight/2;
-            });
-        }
-    }
-    */
     function Character(name, x, y){
         //define the image object within the Character
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
 
-        console.log(this.imageObject);
-        console.log(this.imageObject.src);
+        window.character.push(this);
+        window.characterPosition = window.character.indexOf(this);
 
         //set natural width and natural height once the image is loaded
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
-                console.log('imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
-                //console.log(imgWidth);
+
+                //set natural width and natural height to object
+                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
+
+                //set initial x and y position
+                window.character[characterPosition]['imageObject']['x'] = x;
+                window.character[characterPosition]['imageObject']['y'] = y;
+
+                //set loaded property for the object once loading is done
+                window.character[characterPosition]['imageObject']['loaded'] = true;
+
+                $('button#play').show();
+
+                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
+
+                //set natural width and natural height to object
+                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
+
+                //set initial x and y position
+                window.character[characterPosition]['imageObject']['x'] = x;
+                window.character[characterPosition]['imageObject']['y'] = y;
+
+                //set loaded property for the object once loading is done
+                window.character[characterPosition]['imageObject']['loaded'] = true;
+
+                $('button#play').show();
+
+                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         }
-        //set natural width and natural height to object
-        this['w'] = this['w0'] = window.imgWidth;
-        this['h'] = this['h0'] = window.imgHeight;
-
-        //set initial x and y position
-        this['x'] = x;
-        this['y'] = y;
-        
-        console.log('imgWidth inside character constructor = '+window.imgWidth);
-        /*
-        console.log(this['w']);
-        */
-    }
-
-    //relative position functions
-    function positionPlant1(){
-        //reset x and y for plant 1
-        window.plant1x = window.plant1x0 = WIDTH / 2;
-        window.plant1y = window.plant1y0 = HEIGHT / 2;        
-    }
-    function positionSun0(){
-        //convert to percentages
-        sun0['x'] = (sun0['x']/100)*WIDTH;
-        sun0['y'] = (sun0['y']/100)*HEIGHT;
-    }
-    function positionSun1(){
-        //convert to percentages
-        sun1['x'] = (sun1['x']/100)*WIDTH;
-        sun1['y'] = (sun1['y']/100)*HEIGHT;
-    }
-    function positionSun2(){
-        //convert to percentages
-        sun2['x'] = (sun2['x']/100)*WIDTH;
-        sun2['y'] = (sun2['y']/100)*HEIGHT;
     }
 
     function startDrawing(){
         $('button#play').hide();
         intervalId = setInterval(draw, 10);
-        /*
-        console.log(sun0);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     console.log(sun0['x'], sun0['y'], sun0['w'], sun0['h']);
-        */
 
         //load the wav only if we need it, otherwise load the mp3
         if (typeof window.waapisimContexts != 'undefined'){
@@ -234,36 +124,15 @@ $( document ).ready(function() {
         frame ++;
         clear();
         
-        //draw sun
-        drawCharacter(sun0.imageObject, sun0['x'], sun0['y'], sun0['w'], sun0['h']);
-        drawCharacter(sun1.imageObject, sun1['x'], sun1['y'], sun1['w'], sun1['h']);
-        drawCharacter(sun2.imageObject, sun2['x'], sun2['y'], sun2['w'], sun2['h']);
-        /*
-        //draw plant 1
-        if(averageVolume - volumeCenter > 0){
-            //increase width based on volume
-            plant1w = plant1w0 + (averageVolume - volumeCenter);
-            //set height proportionally to width
-            plant1h = (plant1w * (plant1h0 / plant1w0) );
-            
-            //pulse size
-            ctx.save();
-            ctx.translate( plant1x, plant1y );
-            drawCharacter(plant1, 0, -(plant1h-plant1h0), plant1w, plant1h);
-            ctx.restore();
-        } else {
-            //reset width and height to natural size
-            plant1w = plant1w0;
-            plant1h = plant1h0;
-            drawCharacter(plant1, plant1x, plant1y, plant1w, plant1h);
-            //console.log(averageVolume);
-        }
-        */
+        //draw characters
+        drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+        
     }
 
     //reset height and width
-    $(window).resize(respondCanvas);
+    //$(window).resize(respondCanvas);
 
+    //not using this for now
     function respondCanvas(){
         $(canvas).attr('width', $(container).width() );
         $(canvas).attr('height', $(window).height() );
@@ -271,11 +140,6 @@ $( document ).ready(function() {
         //reset canvas width and height
         WIDTH = canvas.width;
         HEIGHT = canvas.height;
-
-        positionPlant1();
-        positionSun0();
-        positionSun1();
-        positionSun2();
 
     }
 
@@ -324,9 +188,6 @@ $( document ).ready(function() {
         // we use the javascript node to draw at a
         // specific interval.
         analyser.connect(javascriptNode);
-
-//        splitter.connect(context.destination,0,0);
-//        splitter.connect(context.destination,0,1);
 
         // and connect to destination
         sourceNode.connect(context.destination);

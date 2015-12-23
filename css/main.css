@@ -182,7 +182,7 @@ audio {
 }
 
 button#play{
-    display:block;
+    display:none;
     background:none no-repeat scroll 0 0 transparent;
     background-position:center center;
     border:medium none;
