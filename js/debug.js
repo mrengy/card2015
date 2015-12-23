@@ -1,6 +1,8 @@
+window.imgWidth = 0;
+window.imgHeight = 0;
+
 $( document ).ready(function() {
-    var imgWidth;
-    var imgHeight;
+	console.log(imgWidth);
     var sun0 = new Character('sun0', 1, 0);
 
     function init(){
@@ -9,8 +11,6 @@ $( document ).ready(function() {
         ctx = canvas.getContext('2d');
         ctx.font = "20.0px Arial, Helvetica, sans-serif";
         container = $(canvas).parent();
-
-        respondCanvas();
     }
 
     function Character(name, x, y){
@@ -28,7 +28,6 @@ $( document ).ready(function() {
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
                 console.log('imgWidth inside imageObject event listener for '+this.src+' = '+window.imgWidth);
-                //console.log(imgWidth);
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -46,4 +45,5 @@ $( document ).ready(function() {
         
         console.log('imgWidth inside character constructor = '+window.imgWidth);
     }
+    init();
 });
