@@ -41,7 +41,12 @@ $( document ).ready(function() {
 
     //load images
     var sun0 = new Character('sun0',20,0);
-
+    
+    window.setTimeout(slowLog, 2000);
+    function slowLog(){
+        var sun1 = new Character('sun1',20,0);
+    }
+    
     function init(){
 
         //set canvas context
@@ -60,6 +65,7 @@ $( document ).ready(function() {
         this.imageObject.src = 'img/'+name+'.png';
 
         window.character.push(this);
+        console.log(this.imageObject.src);
         //window.character[name] = this;
         window.characterPosition = window.character.indexOf(this);
 
@@ -67,6 +73,34 @@ $( document ).ready(function() {
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
+                window.imgWidth = this.naturalWidth/2;
+                window.imgHeight = this.naturalHeight/2;
+
+                //set natural width and natural height to object
+                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
+                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
+
+                //set initial x and y position
+                window.character[characterPosition]['imageObject']['x1'] = x;
+                window.character[characterPosition]['imageObject']['y1'] = y;
+
+                //set loaded property for the object once loading is done
+                window.character[characterPosition]['imageObject']['loaded'] = true;
+                
+                console.log(characterPosition);
+                console.log(window.character[characterPosition]['imageObject']);
+                
+                function imageLoaded(element, index, array){
+                    return element['imageObject']['loaded'] == true;
+                }
+
+                //test whether every object in array has the image loaded
+                if(character.every(imageLoaded)){
+                    $('button#play').show();
+                };
+            });
+        } else if (this.imageObject.attachEvent){
+            this.imageObject.attachEvent('onload', function(){
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
 
@@ -89,28 +123,6 @@ $( document ).ready(function() {
                 if(character.every(imageLoaded)){
                     $('button#play').show();
                 };
-
-                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-            });
-        } else if (this.imageObject.attachEvent){
-            this.imageObject.attachEvent('onload', function(){
-                window.imgWidth = this.naturalWidth/2;
-                window.imgHeight = this.naturalHeight/2;
-
-                //set natural width and natural height to object
-                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
-                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
-
-                //set initial x and y position
-                window.character[characterPosition]['imageObject']['x1'] = x;
-                window.character[characterPosition]['imageObject']['y1'] = y;
-
-                //set loaded property for the object once loading is done
-                window.character[characterPosition]['imageObject']['loaded'] = true;
-
-                $('button#play').show();
-
-                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         }
     }
@@ -125,7 +137,6 @@ $( document ).ready(function() {
         } else {
             loadSound("audio/home-grown-tomatoes.mp3");
         }
-        console.log(window.character[0]);
     }
 
     function draw(){
@@ -135,6 +146,8 @@ $( document ).ready(function() {
         //draw characters
         drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
         window.character[0]['imageObject']['x1'] ++;
+        drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
+        window.character[1]['imageObject']['x1'] ++;
     }
 
     //reset height and width
