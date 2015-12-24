@@ -29,7 +29,6 @@ $( document ).ready(function() {
         //set natural width and natural height once the image is loaded
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                console.log('this.naturalWidth for '+this.src+' = '+this.naturalWidth);
                 window.imgWidth = this.naturalWidth/2;
                 window.imgHeight = this.naturalHeight/2;
 
@@ -79,8 +78,6 @@ $( document ).ready(function() {
         $('button#play').hide();
         intervalId = setInterval(draw, 10);
     }
-
-    
 
     function draw(){
         clear();

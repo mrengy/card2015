@@ -75,10 +75,8 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
-                console.log(x);
-                window.character[characterPosition]['imageObject']['x'] = x;
-                window.character[characterPosition]['imageObject']['y'] = y;
-                console.log(window.character[characterPosition]['imageObject']['x']);
+                window.character[characterPosition]['imageObject']['x1'] = x;
+                window.character[characterPosition]['imageObject']['y1'] = y;
 
                 //set loaded property for the object once loading is done
                 window.character[characterPosition]['imageObject']['loaded'] = true;
@@ -92,7 +90,7 @@ $( document ).ready(function() {
                     $('button#play').show();
                 };
 
-                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -104,15 +102,15 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
-                window.character[characterPosition]['imageObject']['x'] = x;
-                window.character[characterPosition]['imageObject']['y'] = y;
+                window.character[characterPosition]['imageObject']['x1'] = x;
+                window.character[characterPosition]['imageObject']['y1'] = y;
 
                 //set loaded property for the object once loading is done
                 window.character[characterPosition]['imageObject']['loaded'] = true;
 
                 $('button#play').show();
 
-                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+                //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
         }
     }
@@ -130,16 +128,13 @@ $( document ).ready(function() {
         console.log(window.character[0]);
     }
 
-    
-
     function draw(){
         frame ++;
         clear();
         
         //draw characters
-        drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-        //window.character[0]['imageObject']['x'] += 10;
-        //console.log(window.character[0]['imageObject']['x']);
+        drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+        window.character[0]['imageObject']['x1'] ++;
     }
 
     //reset height and width
