@@ -40,7 +40,7 @@ $( document ).ready(function() {
     window.characterPosition;
 
     //load images
-    var sun0 = new Character('sun0',0,0);
+    var sun0 = new Character('sun0',20,0);
 
     function init(){
 
@@ -60,6 +60,7 @@ $( document ).ready(function() {
         this.imageObject.src = 'img/'+name+'.png';
 
         window.character.push(this);
+        //window.character[name] = this;
         window.characterPosition = window.character.indexOf(this);
 
         var imagesReady = false;
@@ -76,8 +77,10 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
+                console.log(x);
                 window.character[characterPosition]['imageObject']['x'] = x;
                 window.character[characterPosition]['imageObject']['y'] = y;
+                console.log(window.character[characterPosition]['imageObject']['x']);
 
                 //set loaded property for the object once loading is done
                 window.character[characterPosition]['imageObject']['loaded'] = true;
@@ -86,9 +89,10 @@ $( document ).ready(function() {
                     return element['imageObject']['loaded'] == true;
                 }
 
-                console.log(character.every(imageLoaded));
-
-                $('button#play').show();
+                //test whether every object in array has the image loaded
+                if(character.every(imageLoaded)){
+                    $('button#play').show();
+                };
 
                 //drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
             });
@@ -125,6 +129,7 @@ $( document ).ready(function() {
         } else {
             loadSound("audio/home-grown-tomatoes.mp3");
         }
+        console.log(window.character[0]);
     }
 
     
@@ -135,7 +140,8 @@ $( document ).ready(function() {
         
         //draw characters
         drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-        
+        //window.character[0]['imageObject']['x'] += 10;
+        //console.log(window.character[0]['imageObject']['x']);
     }
 
     //reset height and width
