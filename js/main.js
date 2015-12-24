@@ -43,16 +43,16 @@ $( document ).ready(function() {
     function loadImages(){
         if (!window.character[0]){
             var sun0 = new Character('sun0',20,0);
-            console.log('started to load sun0');
         } else if (!window.character[1]){
             var sun1 = new Character('sun1',20,0);
-            console.log('started to load sun1');
         } else if (!window.character[2]){
             var sun2 = new Character('sun2',20,0);
-            console.log('started to load sun2');
+        } else if (!window.character[3]){
+            var bed = new Character('bed', 50, 500);
+        } else if (!window.character[4]){
+            var bed = new Character('plant1', 480, 490);
         } else if(character.every(imageLoaded)){
             $('button#play').show();
-            console.log('all images loaded');
         }
 
         //test whether every object in array has the image loaded
@@ -155,12 +155,28 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
-        drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-        window.character[0]['imageObject']['x1'] ++;
-        drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
-        window.character[1]['imageObject']['x1'] ++;
-        drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
-        window.character[2]['imageObject']['x1'] ++;
+            drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+            window.character[0]['imageObject']['x1'] ++;
+            drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
+            window.character[1]['imageObject']['x1'] ++;
+            drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
+            window.character[2]['imageObject']['x1'] ++;
+            
+            //bed
+            drawCharacter(window.character[3]['imageObject'],window.character[3]['imageObject']['x1'],window.character[3]['imageObject']['y1'],window.character[3]['imageObject']['w'],window.character[3]['imageObject']['h']);
+
+            //plant1
+            if(averageVolume > 0){
+            ctx.save();
+            ctx.translate(window.character[4]['imageObject']['w']/2,0);
+            ctx.translate(window.character[4]['imageObject']['x1'], (window.character[4]['imageObject']['y1']+window.character[4]['imageObject']['h']));
+            ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
+            ctx.translate(-window.character[4]['imageObject']['w']/2, -window.character[4]['imageObject']['h']);
+            drawCharacter(window.character[4]['imageObject'], 0, 0, window.character[4]['imageObject']['w'], window.character[4]['imageObject']['h']);
+            ctx.restore();
+            } else {
+                drawCharacter(window.character[4]['imageObject'],window.character[4]['imageObject']['x1'],window.character[4]['imageObject']['y1'],window.character[4]['imageObject']['w'],window.character[4]['imageObject']['h']);
+            }
     }
 
     //reset height and width
@@ -271,6 +287,7 @@ $( document ).ready(function() {
         var array =  new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(array);
         averageVolume = getAverageVolume(array);
+        //averageVolume = 0;
 
         // get the average for the second channel
         var array2 =  new Uint8Array(analyser2.frequencyBinCount);
