@@ -41,15 +41,18 @@ $( document ).ready(function() {
 
     //load images
     function loadImages(){
-        var counter = 0;
-        if (!window.character[counter] || window.character[counter]['imageObject']['loaded'] != true){
+        if (!window.character[0]){
             var sun0 = new Character('sun0',20,0);
-            counter ++;
-        } else if (window.character[counter]['imageObject']['loaded'] != true){
+            console.log('started to load sun0');
+        } else if (!window.character[1]){
             var sun1 = new Character('sun1',20,0);
-            counter ++;
+            console.log('started to load sun1');
+        } else if (!window.character[2]){
+            var sun2 = new Character('sun2',20,0);
+            console.log('started to load sun2');
         } else if(character.every(imageLoaded)){
             $('button#play').show();
+            console.log('all images loaded');
         }
 
         //test whether every object in array has the image loaded
@@ -99,9 +102,11 @@ $( document ).ready(function() {
                 //set loaded property for the object once loading is done
                 window.character[characterPosition]['imageObject']['loaded'] = true;
                 
+                /*
                 console.log(characterPosition);
                 console.log(window.character[characterPosition]['imageObject']);
-                
+                */
+
                 //run loadImages again to load the next image or show the button when all are loaded
                 loadImages();
             });
@@ -154,6 +159,8 @@ $( document ).ready(function() {
         window.character[0]['imageObject']['x1'] ++;
         drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
         window.character[1]['imageObject']['x1'] ++;
+        drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
+        window.character[2]['imageObject']['x1'] ++;
     }
 
     //reset height and width
