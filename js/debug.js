@@ -1,3 +1,5 @@
+var WIDTH;
+var HEIGHT;
 window.imgWidth;
 window.imgHeight;
 
@@ -36,12 +38,21 @@ $( document ).ready(function() {
                 window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
 
                 //set initial x and y position
+                console.log(x);
                 window.character[characterPosition]['imageObject']['x'] = x;
                 window.character[characterPosition]['imageObject']['y'] = y;
-                console.log('w property for the sun0 object inside imageObject event listener = '+window.character[characterPosition]['imageObject']['w'])
-                window.character[characterPosition]['imageObject']['w'] = window.imgWidth;
+                console.log(window.character[characterPosition]['imageObject']['x']);
+                //set loaded property for the object once loading is done
+                window.character[characterPosition]['imageObject']['loaded'] = true;
 
-                drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+                function imageLoaded(element, index, array){
+                    return element['imageObject']['loaded'] == true;
+                }
+
+                //test whether every object in array has the image loaded
+                if(character.every(imageLoaded)){
+                    $('button#play').show();
+                };
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -64,11 +75,30 @@ $( document ).ready(function() {
         }
     } //end object constructor
 
+    function startDrawing(){
+        $('button#play').hide();
+        intervalId = setInterval(draw, 10);
+    }
+
+    
+
+    function draw(){
+        clear();
+        
+        //draw characters
+        drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x'],window.character[0]['imageObject']['y'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
+        window.character[0]['imageObject']['x'] += 10;
+        console.log(window.character[0]['imageObject']['x']);
+    }
+
     function drawCharacter(name, x, y, w, h){
         ctx.drawImage(name, x, y, w, h);
     }
 
-    console.log('w property for the sun0 object outside consturctor = '+window.character[characterPosition]['imageObject']['w']);
+    function clear() {
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    }
     
     init();
+    $('button#play').on('click', startDrawing );
 });

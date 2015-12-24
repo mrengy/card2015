@@ -63,8 +63,6 @@ $( document ).ready(function() {
         //window.character[name] = this;
         window.characterPosition = window.character.indexOf(this);
 
-        var imagesReady = false;
-
         //set natural width and natural height once the image is loaded
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
