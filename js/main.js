@@ -40,12 +40,20 @@ $( document ).ready(function() {
     window.characterPosition;
 
     //load images
-    var sun0 = new Character('sun0',20,0);
-    
+    function loadImage1(){
+        var sun0 = new Character('sun0',20,0);
+    }
+    function loadImage2(){
+        var sun1 = new Character('sun1',20,0);
+    }
+    $.when(loadImage1()).then(loadImage2());
+
+    /*
     window.setTimeout(slowLog, 2000);
     function slowLog(){
         var sun1 = new Character('sun1',20,0);
     }
+    */
     
     function init(){
 
@@ -65,7 +73,6 @@ $( document ).ready(function() {
         this.imageObject.src = 'img/'+name+'.png';
 
         window.character.push(this);
-        console.log(this.imageObject.src);
         //window.character[name] = this;
         window.characterPosition = window.character.indexOf(this);
 
