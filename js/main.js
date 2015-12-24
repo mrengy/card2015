@@ -40,21 +40,24 @@ $( document ).ready(function() {
     window.characterPosition;
 
     //load images
-    function loadImage1(){
-        var sun0 = new Character('sun0',20,0);
-    }
-    function loadImage2(){
-        var sun1 = new Character('sun1',20,0);
-    }
-    $.when(loadImage1()).then(loadImage2());
+    function loadImages(){
+        var counter = 0;
+        if (!window.character[counter] || window.character[counter]['imageObject']['loaded'] != true){
+            var sun0 = new Character('sun0',20,0);
+            counter ++;
+        } else if (window.character[counter]['imageObject']['loaded'] != true){
+            var sun1 = new Character('sun1',20,0);
+            counter ++;
+        } else if(character.every(imageLoaded)){
+            $('button#play').show();
+        }
 
-    /*
-    window.setTimeout(slowLog, 2000);
-    function slowLog(){
-        var sun1 = new Character('sun1',20,0);
+        //test whether every object in array has the image loaded
+        function imageLoaded(element, index, array){
+            return element['imageObject']['loaded'] == true;
+        }
     }
-    */
-    
+
     function init(){
 
         //set canvas context
@@ -71,6 +74,8 @@ $( document ).ready(function() {
         //define the image object within the Character
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
+
+        //console.log('character length = '+window.character.length);
 
         window.character.push(this);
         //window.character[name] = this;
@@ -97,14 +102,8 @@ $( document ).ready(function() {
                 console.log(characterPosition);
                 console.log(window.character[characterPosition]['imageObject']);
                 
-                function imageLoaded(element, index, array){
-                    return element['imageObject']['loaded'] == true;
-                }
-
-                //test whether every object in array has the image loaded
-                if(character.every(imageLoaded)){
-                    $('button#play').show();
-                };
+                //run loadImages again to load the next image or show the button when all are loaded
+                loadImages();
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
@@ -252,6 +251,7 @@ $( document ).ready(function() {
     }
 
     //RUN FUNCTIONS
+    loadImages();
     init();
     setupAudioNodes();
 
