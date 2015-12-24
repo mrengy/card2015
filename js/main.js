@@ -37,14 +37,18 @@ $( document ).ready(function() {
     var character = [];
     var characterPosition;
 
+    //orbit variables
+    var orbit = {centerX:410, centerY:500, radius:600, angle:10}
+    var sunParent = {x:-200, y:0,speed:.002};
+
     //load images
     function loadImages(){
         if (!character[0]){
-            var sun0 = new Character('sun0',20,0);
+            var sun0 = new Character('sun0', sunParent.x, sunParent.y);
         } else if (!character[1]){
-            var sun1 = new Character('sun1',20,0);
+            var sun1 = new Character('sun1', sunParent.x, sunParent.y);
         } else if (!character[2]){
-            var sun2 = new Character('sun2',20,0);
+            var sun2 = new Character('sun2', sunParent.x, sunParent.y);
         } else if (!character[3]){
             var bed = new Character('bed', 50, 500);
         } else if (!character[4]){
@@ -154,16 +158,19 @@ $( document ).ready(function() {
         
         //draw characters
             //sun
-            drawCharacter(character[0]['imageObject'],character[0]['imageObject']['x1'],character[0]['imageObject']['y1'],character[0]['imageObject']['w'],character[0]['imageObject']['h']);
-            //character[0]['imageObject']['x1'] ++;
+            //move sun
+            sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
+            sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
+            orbit.angle += sunParent.speed;
+
+            drawCharacter(character[0]['imageObject'],sunParent.x,sunParent.y,character[0]['imageObject']['w'],character[0]['imageObject']['h']);
             if(averageVolume - volumeCenter > 5){
-                drawCharacter(character[1]['imageObject'],character[1]['imageObject']['x1'],character[1]['imageObject']['y1'],character[1]['imageObject']['w'],character[1]['imageObject']['h']);
+                drawCharacter(character[1]['imageObject'],sunParent.x,sunParent.y,character[1]['imageObject']['w'],character[1]['imageObject']['h']);
             }
-            //character[1]['imageObject']['x1'] ++;
             if(averageVolume - volumeCenter > 15){
-                drawCharacter(character[2]['imageObject'],character[2]['imageObject']['x1'],character[2]['imageObject']['y1'],character[2]['imageObject']['w'],character[2]['imageObject']['h']);
+                drawCharacter(character[2]['imageObject'],sunParent.x,sunParent.y,character[2]['imageObject']['w'],character[2]['imageObject']['h']);
             }
-            //character[2]['imageObject']['x1'] ++;
+
             //console.log(averageVolume - volumeCenter);
             
             //bed
