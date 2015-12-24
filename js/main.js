@@ -30,26 +30,24 @@ $( document ).ready(function() {
     var increment = 1;
     var volumeCenter = 20;
     var framesBetweenShift = 30;
-    var imgWidth;
-    var imgHeight;
 
     //reusable character variables
-    window.imgWidth;
-    window.imgHeight;
-    window.character = [];
-    window.characterPosition;
+    var imgWidth;
+    var imgHeight;
+    var character = [];
+    var characterPosition;
 
     //load images
     function loadImages(){
-        if (!window.character[0]){
+        if (!character[0]){
             var sun0 = new Character('sun0',20,0);
-        } else if (!window.character[1]){
+        } else if (!character[1]){
             var sun1 = new Character('sun1',20,0);
-        } else if (!window.character[2]){
+        } else if (!character[2]){
             var sun2 = new Character('sun2',20,0);
-        } else if (!window.character[3]){
+        } else if (!character[3]){
             var bed = new Character('bed', 50, 500);
-        } else if (!window.character[4]){
+        } else if (!character[4]){
             var bed = new Character('plant1', 480, 490);
         } else if(character.every(imageLoaded)){
             $('button#play').show();
@@ -78,33 +76,33 @@ $( document ).ready(function() {
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
 
-        //console.log('character length = '+window.character.length);
+        //console.log('character length = '+character.length);
 
-        window.character.push(this);
-        //window.character[name] = this;
-        window.characterPosition = window.character.indexOf(this);
+        character.push(this);
+        //character[name] = this;
+        characterPosition = character.indexOf(this);
 
         //set natural width and natural height once the image is loaded
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                window.imgWidth = this.naturalWidth/2;
-                window.imgHeight = this.naturalHeight/2;
+                imgWidth = this.naturalWidth/2;
+                imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
-                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
-                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
+                character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
+                character[characterPosition]['imageObject']['h'] = character[characterPosition]['imageObject']['h0'] = imgHeight;
 
                 //set initial x and y position
-                window.character[characterPosition]['imageObject']['x1'] = x;
-                window.character[characterPosition]['imageObject']['y1'] = y;
+                character[characterPosition]['imageObject']['x1'] = x;
+                character[characterPosition]['imageObject']['y1'] = y;
 
                 //set loaded property for the object once loading is done
-                window.character[characterPosition]['imageObject']['loaded'] = true;
+                character[characterPosition]['imageObject']['loaded'] = true;
                 
                 /*
                 console.log(characterPosition);
-                console.log(window.character[characterPosition]['imageObject']);
+                console.log(character[characterPosition]['imageObject']);
                 */
 
                 //run loadImages again to load the next image or show the button when all are loaded
@@ -112,19 +110,19 @@ $( document ).ready(function() {
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                window.imgWidth = this.naturalWidth/2;
-                window.imgHeight = this.naturalHeight/2;
+                imgWidth = this.naturalWidth/2;
+                imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
-                window.character[characterPosition]['imageObject']['w'] = window.character[characterPosition]['imageObject']['w0'] = window.imgWidth;
-                window.character[characterPosition]['imageObject']['h'] = window.character[characterPosition]['imageObject']['h0'] = window.imgHeight;
+                character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
+                character[characterPosition]['imageObject']['h'] = character[characterPosition]['imageObject']['h0'] = imgHeight;
 
                 //set initial x and y position
-                window.character[characterPosition]['imageObject']['x1'] = x;
-                window.character[characterPosition]['imageObject']['y1'] = y;
+                character[characterPosition]['imageObject']['x1'] = x;
+                character[characterPosition]['imageObject']['y1'] = y;
 
                 //set loaded property for the object once loading is done
-                window.character[characterPosition]['imageObject']['loaded'] = true;
+                character[characterPosition]['imageObject']['loaded'] = true;
 
                 function imageLoaded(element, index, array){
                     return element['imageObject']['loaded'] == true;
@@ -156,32 +154,32 @@ $( document ).ready(function() {
         
         //draw characters
             //sun
-            drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-            //window.character[0]['imageObject']['x1'] ++;
+            drawCharacter(character[0]['imageObject'],character[0]['imageObject']['x1'],character[0]['imageObject']['y1'],character[0]['imageObject']['w'],character[0]['imageObject']['h']);
+            //character[0]['imageObject']['x1'] ++;
             if(averageVolume - volumeCenter > 5){
-                drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
+                drawCharacter(character[1]['imageObject'],character[1]['imageObject']['x1'],character[1]['imageObject']['y1'],character[1]['imageObject']['w'],character[1]['imageObject']['h']);
             }
-            //window.character[1]['imageObject']['x1'] ++;
+            //character[1]['imageObject']['x1'] ++;
             if(averageVolume - volumeCenter > 15){
-                drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
+                drawCharacter(character[2]['imageObject'],character[2]['imageObject']['x1'],character[2]['imageObject']['y1'],character[2]['imageObject']['w'],character[2]['imageObject']['h']);
             }
-            //window.character[2]['imageObject']['x1'] ++;
-            console.log(averageVolume - volumeCenter);
+            //character[2]['imageObject']['x1'] ++;
+            //console.log(averageVolume - volumeCenter);
             
             //bed
-            drawCharacter(window.character[3]['imageObject'],window.character[3]['imageObject']['x1'],window.character[3]['imageObject']['y1'],window.character[3]['imageObject']['w'],window.character[3]['imageObject']['h']);
+            drawCharacter(character[3]['imageObject'],character[3]['imageObject']['x1'],character[3]['imageObject']['y1'],character[3]['imageObject']['w'],character[3]['imageObject']['h']);
 
             //plant1
             if(averageVolume > 0){
             ctx.save();
-            ctx.translate(window.character[4]['imageObject']['w']/2,0);
-            ctx.translate(window.character[4]['imageObject']['x1'], (window.character[4]['imageObject']['y1']+window.character[4]['imageObject']['h']));
+            ctx.translate(character[4]['imageObject']['w']/2,0);
+            ctx.translate(character[4]['imageObject']['x1'], (character[4]['imageObject']['y1']+character[4]['imageObject']['h']));
             ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
-            ctx.translate(-window.character[4]['imageObject']['w']/2, -window.character[4]['imageObject']['h']);
-            drawCharacter(window.character[4]['imageObject'], 0, 0, window.character[4]['imageObject']['w'], window.character[4]['imageObject']['h']);
+            ctx.translate(-character[4]['imageObject']['w']/2, -character[4]['imageObject']['h']);
+            drawCharacter(character[4]['imageObject'], 0, 0, character[4]['imageObject']['w'], character[4]['imageObject']['h']);
             ctx.restore();
             } else {
-                drawCharacter(window.character[4]['imageObject'],window.character[4]['imageObject']['x1'],window.character[4]['imageObject']['y1'],window.character[4]['imageObject']['w'],window.character[4]['imageObject']['h']);
+                drawCharacter(character[4]['imageObject'],character[4]['imageObject']['x1'],character[4]['imageObject']['y1'],character[4]['imageObject']['w'],character[4]['imageObject']['h']);
             }
     }
 
