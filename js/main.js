@@ -155,12 +155,18 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
+            //sun
             drawCharacter(window.character[0]['imageObject'],window.character[0]['imageObject']['x1'],window.character[0]['imageObject']['y1'],window.character[0]['imageObject']['w'],window.character[0]['imageObject']['h']);
-            window.character[0]['imageObject']['x1'] ++;
-            drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
-            window.character[1]['imageObject']['x1'] ++;
-            drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
-            window.character[2]['imageObject']['x1'] ++;
+            //window.character[0]['imageObject']['x1'] ++;
+            if(averageVolume - volumeCenter > 5){
+                drawCharacter(window.character[1]['imageObject'],window.character[1]['imageObject']['x1'],window.character[1]['imageObject']['y1'],window.character[1]['imageObject']['w'],window.character[1]['imageObject']['h']);
+            }
+            //window.character[1]['imageObject']['x1'] ++;
+            if(averageVolume - volumeCenter > 15){
+                drawCharacter(window.character[2]['imageObject'],window.character[2]['imageObject']['x1'],window.character[2]['imageObject']['y1'],window.character[2]['imageObject']['w'],window.character[2]['imageObject']['h']);
+            }
+            //window.character[2]['imageObject']['x1'] ++;
+            console.log(averageVolume - volumeCenter);
             
             //bed
             drawCharacter(window.character[3]['imageObject'],window.character[3]['imageObject']['x1'],window.character[3]['imageObject']['y1'],window.character[3]['imageObject']['w'],window.character[3]['imageObject']['h']);
