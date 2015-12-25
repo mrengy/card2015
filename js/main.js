@@ -175,20 +175,6 @@ $( document ).ready(function() {
             }
     }
 
-    //reset height and width
-    //$(window).resize(respondCanvas);
-
-    //not using this for now
-    function respondCanvas(){
-        $(canvas).attr('width', $(container).width() );
-        $(canvas).attr('height', $(window).height() );
-
-        //reset canvas width and height
-        WIDTH = canvas.width;
-        HEIGHT = canvas.height;
-
-    }
-
     function drawCharacter(name, x, y, w, h){
         ctx.drawImage(name, x, y, w, h);
     }
