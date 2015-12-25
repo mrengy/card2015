@@ -17,7 +17,6 @@ $( document ).ready(function() {
 
     //audio control variables
     var musicStarted = false;
-    var averageVolume = averageVolume2 = 0;
     
     //canvas variables
     var context;
@@ -32,10 +31,7 @@ $( document ).ready(function() {
     var framesBetweenShift = 30;
 
     //reusable character variables
-    var imgWidth;
-    var imgHeight;
     var character = [];
-    var characterPosition;
 
     //orbit variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:10}
@@ -84,14 +80,14 @@ $( document ).ready(function() {
 
         character.push(this);
         //character[name] = this;
-        characterPosition = character.indexOf(this);
+        var characterPosition = character.indexOf(this);
 
         //set natural width and natural height once the image is loaded
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                imgWidth = this.naturalWidth/2;
-                imgHeight = this.naturalHeight/2;
+                var imgWidth = this.naturalWidth/2;
+                var imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
                 character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -103,19 +99,14 @@ $( document ).ready(function() {
 
                 //set loaded property for the object once loading is done
                 character[characterPosition]['imageObject']['loaded'] = true;
-                
-                /*
-                console.log(characterPosition);
-                console.log(character[characterPosition]['imageObject']);
-                */
 
                 //run loadImages again to load the next image or show the button when all are loaded
                 loadImages();
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                imgWidth = this.naturalWidth/2;
-                imgHeight = this.naturalHeight/2;
+                var imgWidth = this.naturalWidth/2;
+                var imgHeight = this.naturalHeight/2;
 
                 //set natural width and natural height to object
                 character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -128,14 +119,8 @@ $( document ).ready(function() {
                 //set loaded property for the object once loading is done
                 character[characterPosition]['imageObject']['loaded'] = true;
 
-                function imageLoaded(element, index, array){
-                    return element['imageObject']['loaded'] == true;
-                }
-
-                //test whether every object in array has the image loaded
-                if(character.every(imageLoaded)){
-                    $('button#play').show();
-                };
+                //run loadImages again to load the next image or show the button when all are loaded
+                loadImages();
             });
         }
     }
@@ -298,15 +283,6 @@ $( document ).ready(function() {
         var array =  new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(array);
         averageVolume = getAverageVolume(array);
-        //averageVolume = 0;
-
-        // get the average for the second channel
-        var array2 =  new Uint8Array(analyser2.frequencyBinCount);
-        analyser2.getByteFrequencyData(array2);
-        averageVolume2 = getAverageVolume(array2);
-
-        // clear the current state
-        //ctx.clearRect(0, 0, 60, 130);
     }
 
     function getAverageVolume(array) {
