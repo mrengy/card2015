@@ -186,6 +186,8 @@ $( document ).ready(function() {
 
                     //draw stars
                     drawStar(50,10,2,.5);
+
+                    drawStar(100,50,1,.9);
                 }
     }
 
@@ -207,6 +209,7 @@ $( document ).ready(function() {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
+        star.push(this);
     }
 
     function clear() {
