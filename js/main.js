@@ -33,6 +33,7 @@ $( document ).ready(function() {
     //reusable character variables
     var characters = [];
     var stars = [];
+    var starIndex = 0;
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:10};
@@ -53,10 +54,16 @@ $( document ).ready(function() {
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
-
         //test whether every object in array has the image loaded
         function imageLoaded(element, index, array){
             return element['imageObject']['loaded'] == true;
+        }
+    }
+
+    function createStars(number){
+        for (var i = 0; i < number; i++){
+            createStar(getRandomInt(0,WIDTH), getRandomInt(0,500), getRandomInt(1,3),getRandomInt(0,10)/10);
+            console.log('star created');
         }
     }
 
@@ -126,6 +133,18 @@ $( document ).ready(function() {
         }
     }
 
+    function createStar(x,y,radius, initialOpacity){
+        //create a star
+        stars.push({
+            thisX: x,
+            thisY: y,
+            thisRadius: radius,
+            thisOpacity: initialOpacity,
+            thisDirection: 'up'
+        });
+        starIndex ++;
+    }
+
     function startDrawing(){
         $('button#play').hide();
         intervalId = setInterval(draw, 33);
@@ -185,9 +204,10 @@ $( document ).ready(function() {
                     ctx.restore();
 
                     //draw stars
-                    drawStar(50,10,2,.5);
-
-                    drawStar(100,50,1,.9);
+                    drawStar(0);
+                    drawStar(1);
+                    pulseStars(0);
+                    pulseStars(0);
                 }
     }
 
@@ -200,20 +220,25 @@ $( document ).ready(function() {
         return nightOpacity;
     }
     
-    function drawStar(x, y, radius, initialOpacity){
-        var starOpacity = initialOpacity;
+    function drawStar(index){
         ctx.save();
-        ctx.fillStyle = 'rgba(255,255,255,'+starOpacity+')';
+        ctx.fillStyle = 'rgba(255,255,255,'+stars[index].thisOpacity+')';
         ctx.beginPath();
-        ctx.arc(x,y,radius,0,Math.PI*2);
+        ctx.arc(stars[index].thisX,stars[index].thisY,stars[index].thisRadius,0,Math.PI*2);
         ctx.fill();
         ctx.closePath();
         ctx.restore();
-        stars.push(this);
     }
 
-    function pulseStars(){
-
+    function pulseStars(index){
+        if ((stars[index].thisOpacity < 1) && (stars[index].thisDirection == 'up')){
+            stars[index].thisOpacity +=.01 ;
+            //console.log(stars[index].thisOpacity);
+        }
+        /*
+        console.log(stars[thisStar].thisOpacity);
+        console.log(stars[thisStar].thisDirection);
+        */
     }
 
     function clear() {
@@ -296,6 +321,7 @@ $( document ).ready(function() {
     loadImages();
     init();
     setupAudioNodes();
+    createStars(30);
 
     // when the javascript node is called
     // we use information from the analyzer node
