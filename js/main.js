@@ -48,7 +48,7 @@ $( document ).ready(function() {
         } else if (!character[3]){
             var bed = new Character('bed', 50, 500);
         } else if (!character[4]){
-            var bed = new Character('plant1', 480, 490);
+            var plant1 = new Character('plant1', 480, 490);
         } else if(character.every(imageLoaded)){
             $('button#play').show();
         }
