@@ -174,11 +174,25 @@ $( document ).ready(function() {
                 drawCharacter(character[4]['imageObject'],character[4]['imageObject']['x1'],character[4]['imageObject']['y1'],character[4]['imageObject']['w'],character[4]['imageObject']['h']);
             }
 
-            //draw night sky 
-            var nightOpacity = setNightOpacity();
-            ctx.fillStyle= 'rgba(10,4,72,'+nightOpacity+')';
-            ctx.fillRect(0,0,WIDTH,HEIGHT);
-            console.log(nightOpacity);
+            //nighttime objects
+                var nightOpacity = setNightOpacity();
+                if (nightOpacity > 0){
+                    //draw night sky
+                    ctx.save();
+                    ctx.fillStyle = 'rgba(10,4,72,'+nightOpacity+')';
+                    ctx.fillRect(0,0,WIDTH,HEIGHT);
+                    ctx.restore();
+
+                    //draw stars
+                    var starOpacity = 1;
+                    ctx.save();
+                    ctx.fillStyle = 'rgba(255,255,255,'+starOpacity+')';
+                    ctx.beginPath();
+                    ctx.arc(50,50,2,0,Math.PI*2);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.restore();
+                }
     }
 
     function drawCharacter(name, x, y, w, h){
@@ -186,10 +200,14 @@ $( document ).ready(function() {
     }
 
     function setNightOpacity(){
-        var nightOpacity = (sunParent.y/orbit.centerY)-1;
+        var nightOpacity = (sunParent.y-orbit.centerY)/orbit.centerY +.1;
         return nightOpacity;
     }
     
+    function drawStars(){
+        
+    }
+
     function clear() {
       ctx.clearRect(0, 0, WIDTH, HEIGHT);
     }
@@ -318,5 +336,5 @@ $( document ).ready(function() {
     }, false);
     //end iOS audio hack
     
-    $('button#play').on('click', startDrawing );
+    $('button#play').on('click', startDrawing);
 });
