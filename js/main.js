@@ -205,12 +205,7 @@ $( document ).ready(function() {
 
                     //draw stars
                     stars.forEach(drawStar);
-                    /*
-                    drawStar(0);
-                    drawStar(1);
-                    pulseStars(0);
-                    pulseStars(0);
-                    */
+                    stars.forEach(pulseStar);
                 }
     }
 
@@ -224,27 +219,28 @@ $( document ).ready(function() {
     }
     
     function drawStar(index){
-        console.log(index);
-        /*
         ctx.save();
-        ctx.fillStyle = 'rgba(255,255,255,'+stars[index].thisOpacity+')';
+        ctx.fillStyle = 'rgba(255,255,255,'+index.thisOpacity+')';
         ctx.beginPath();
-        ctx.arc(stars[index].thisX,stars[index].thisY,stars[index].thisRadius,0,Math.PI*2);
+        ctx.arc(index.thisX,index.thisY,index.thisRadius,0,Math.PI*2);
         ctx.fill();
         ctx.closePath();
         ctx.restore();
-        */
     }
 
-    function pulseStars(index){
-        if ((stars[index].thisOpacity < 1) && (stars[index].thisDirection == 'up')){
-            stars[index].thisOpacity +=.01 ;
-            //console.log(stars[index].thisOpacity);
+    function pulseStar(index){
+        if ((index.thisOpacity < 1) && (index.thisDirection == 'up')){
+            index.thisOpacity += .06 ;
         }
-        /*
-        console.log(stars[thisStar].thisOpacity);
-        console.log(stars[thisStar].thisDirection);
-        */
+        if (index.thisOpacity >= 1){
+            index.thisDirection = 'down';
+        }
+        if ((index.thisOpacity > 0) && (index.thisDirection == 'down')){
+            index.thisOpacity -= .06;
+        }
+        if (index.thisOpacity <= 0){
+            index.thisDirection = 'up';
+        }
     }
 
     function clear() {
