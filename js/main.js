@@ -86,8 +86,8 @@ $( document ).ready(function() {
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                var imgWidth = this.naturalWidth/2;
-                var imgHeight = this.naturalHeight/2;
+                var imgWidth = this.naturalWidth;
+                var imgHeight = this.naturalHeight;
 
                 //set natural width and natural height to object
                 character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -105,8 +105,8 @@ $( document ).ready(function() {
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                var imgWidth = this.naturalWidth/2;
-                var imgHeight = this.naturalHeight/2;
+                var imgWidth = this.naturalWidth;
+                var imgHeight = this.naturalHeight;
 
                 //set natural width and natural height to object
                 character[characterPosition]['imageObject']['w'] = character[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -127,7 +127,7 @@ $( document ).ready(function() {
 
     function startDrawing(){
         $('button#play').hide();
-        intervalId = setInterval(draw, 10);
+        intervalId = setInterval(draw, 33);
 
         //load the wav only if we need it, otherwise load the mp3
         if (typeof window.waapisimContexts != 'undefined'){
