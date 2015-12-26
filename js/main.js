@@ -32,6 +32,7 @@ $( document ).ready(function() {
 
     //reusable character variables
     var character = [];
+    var star = [];
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:10};
@@ -184,14 +185,7 @@ $( document ).ready(function() {
                     ctx.restore();
 
                     //draw stars
-                    var starOpacity = 1;
-                    ctx.save();
-                    ctx.fillStyle = 'rgba(255,255,255,'+starOpacity+')';
-                    ctx.beginPath();
-                    ctx.arc(50,50,2,0,Math.PI*2);
-                    ctx.fill();
-                    ctx.closePath();
-                    ctx.restore();
+                    drawStar(50,10,2,.5);
                 }
     }
 
@@ -204,8 +198,15 @@ $( document ).ready(function() {
         return nightOpacity;
     }
     
-    function drawStars(){
-        
+    function drawStar(x, y, radius, initialOpacity){
+        var starOpacity = initialOpacity;
+        ctx.save();
+        ctx.fillStyle = 'rgba(255,255,255,'+starOpacity+')';
+        ctx.beginPath();
+        ctx.arc(x,y,radius,0,Math.PI*2);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
     }
 
     function clear() {
