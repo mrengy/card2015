@@ -204,10 +204,13 @@ $( document ).ready(function() {
                     ctx.restore();
 
                     //draw stars
+                    stars.forEach(drawStar);
+                    /*
                     drawStar(0);
                     drawStar(1);
                     pulseStars(0);
                     pulseStars(0);
+                    */
                 }
     }
 
@@ -221,6 +224,8 @@ $( document ).ready(function() {
     }
     
     function drawStar(index){
+        console.log(index);
+        /*
         ctx.save();
         ctx.fillStyle = 'rgba(255,255,255,'+stars[index].thisOpacity+')';
         ctx.beginPath();
@@ -228,6 +233,7 @@ $( document ).ready(function() {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
+        */
     }
 
     function pulseStars(index){
