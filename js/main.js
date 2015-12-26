@@ -33,9 +33,9 @@ $( document ).ready(function() {
     //reusable character variables
     var character = [];
 
-    //orbit variables
-    var orbit = {centerX:410, centerY:500, radius:600, angle:10}
-    var sunParent = {x:-200, y:0,speed:.002};
+    //specific character variables
+    var orbit = {centerX:410, centerY:500, radius:600, angle:10};
+    var sunParent = {x:-200, y:0,speed:.02};
 
     //load images
     function loadImages(){
@@ -173,10 +173,20 @@ $( document ).ready(function() {
             } else {
                 drawCharacter(character[4]['imageObject'],character[4]['imageObject']['x1'],character[4]['imageObject']['y1'],character[4]['imageObject']['w'],character[4]['imageObject']['h']);
             }
+
+            //draw night sky 
+            var nightOpacity = setNightOpacity();
+            ctx.fillStyle= 'rgba(10,4,72,'+nightOpacity+')';
+            ctx.fillRect(0,0,WIDTH,HEIGHT);
     }
 
     function drawCharacter(name, x, y, w, h){
         ctx.drawImage(name, x, y, w, h);
+    }
+
+    function setNightOpacity(){
+        var nightOpacity = -(sunParent.y/orbit.centerY);
+        return nightOpacity;
     }
     
     function clear() {
