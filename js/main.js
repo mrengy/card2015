@@ -178,6 +178,7 @@ $( document ).ready(function() {
             var nightOpacity = setNightOpacity();
             ctx.fillStyle= 'rgba(10,4,72,'+nightOpacity+')';
             ctx.fillRect(0,0,WIDTH,HEIGHT);
+            console.log(nightOpacity);
     }
 
     function drawCharacter(name, x, y, w, h){
@@ -185,7 +186,7 @@ $( document ).ready(function() {
     }
 
     function setNightOpacity(){
-        var nightOpacity = -(sunParent.y/orbit.centerY);
+        var nightOpacity = (sunParent.y/orbit.centerY)-1;
         return nightOpacity;
     }
     
