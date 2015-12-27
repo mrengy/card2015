@@ -172,6 +172,9 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
+            if(introDone == false){
+                detectIntroDone();
+            }
             //for detecting day change
             var nightOpacity = setNightOpacity();
 
@@ -197,15 +200,6 @@ $( document ).ready(function() {
             }
             if (averageVolume - volumeCenter > 15){
                 drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
-            }
-
-            //console.log(averageVolume);
-            if ((averageVolume > peakMinimum) && introDone == false){
-                numPeaks ++;
-            }
-            if (numPeaks >= peaksUntilStart){
-                console.log('introDone');
-                introDone = true;
             }
             
             //bed
@@ -246,6 +240,16 @@ $( document ).ready(function() {
     function setNightOpacity(){
         var nightOpacity = (sunParent.y-orbit.centerY)/orbit.centerY +.1;
         return nightOpacity;
+    }
+
+    function detectIntroDone(){
+        if (averageVolume > peakMinimum){
+                numPeaks ++;
+        }
+        if (numPeaks >= peaksUntilStart){
+            introDone = true;
+            console.log('intro done');
+        }
     }
     
     function drawStar(index){
