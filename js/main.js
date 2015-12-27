@@ -34,7 +34,10 @@ $( document ).ready(function() {
     var characters = [];
     var stars = [];
     var starIndex = 0;
+
+    //day variables
     var dayChanged = false;
+    var day = 0;
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:10};
@@ -176,7 +179,7 @@ $( document ).ready(function() {
             //var sunHeight = sunParent.y;
 
             if ((nightOpacity > 0) && (prevSunHeight >= sunParent.y) && (dayChanged == false)){
-                console.log('new day');
+                day ++;
                 dayChanged = true;
             } else if ((nightOpacity <= 0) && (prevSunHeight <= sunParent.y) && (dayChanged == true)){
                 dayChanged = false;
@@ -196,18 +199,19 @@ $( document ).ready(function() {
             drawCharacter(characters[3]['imageObject'],characters[3]['imageObject']['x1'],characters[3]['imageObject']['y1'],characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
 
             //plant1
-            if(averageVolume > 0){
-            ctx.save();
-            ctx.translate(characters[4]['imageObject']['w']/2,0);
-            ctx.translate(characters[4]['imageObject']['x1'], (characters[4]['imageObject']['y1']+characters[4]['imageObject']['h']));
-            ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
-            ctx.translate(-characters[4]['imageObject']['w']/2, -characters[4]['imageObject']['h']);
-            drawCharacter(characters[4]['imageObject'], 0, 0, characters[4]['imageObject']['w'], characters[4]['imageObject']['h']);
-            ctx.restore();
-            } else {
-                drawCharacter(characters[4]['imageObject'],characters[4]['imageObject']['x1'],characters[4]['imageObject']['y1'],characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
+            if(day == 1){
+                if(averageVolume > 0){
+                ctx.save();
+                ctx.translate(characters[4]['imageObject']['w']/2,0);
+                ctx.translate(characters[4]['imageObject']['x1'], (characters[4]['imageObject']['y1']+characters[4]['imageObject']['h']));
+                ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
+                ctx.translate(-characters[4]['imageObject']['w']/2, -characters[4]['imageObject']['h']);
+                drawCharacter(characters[4]['imageObject'], 0, 0, characters[4]['imageObject']['w'], characters[4]['imageObject']['h']);
+                ctx.restore();
+                } else {
+                    drawCharacter(characters[4]['imageObject'],characters[4]['imageObject']['x1'],characters[4]['imageObject']['y1'],characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
+                }
             }
-
             //nighttime objects
                 if (nightOpacity > 0){
                     //draw night sky
