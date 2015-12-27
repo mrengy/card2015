@@ -43,6 +43,12 @@ $( document ).ready(function() {
     var orbit = {centerX:410, centerY:500, radius:600, angle:10};
     var sunParent = {x:-200, y:0,speed:.02};
 
+    //detecting start of song after the musical intro
+    var numPeaks = 0;
+    var peakMinimum = 40;
+    var peaksUntilStart = 50;
+    var introDone = false;
+
     //load images
     function loadImages(){
         if (!characters[0]){
@@ -193,7 +199,14 @@ $( document ).ready(function() {
                 drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
             }
 
-            //console.log(averageVolume - volumeCenter);
+            //console.log(averageVolume);
+            if ((averageVolume > peakMinimum) && introDone == false){
+                numPeaks ++;
+            }
+            if (numPeaks >= peaksUntilStart){
+                console.log('introDone');
+                introDone = true;
+            }
             
             //bed
             drawCharacter(characters[3]['imageObject'],characters[3]['imageObject']['x1'],characters[3]['imageObject']['y1'],characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
