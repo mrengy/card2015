@@ -34,6 +34,7 @@ $( document ).ready(function() {
     var characters = [];
     var stars = [];
     var starIndex = 0;
+    var dayChanged = false;
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:10};
@@ -162,17 +163,30 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
-            //sun
+            //for detecting day change
+            var nightOpacity = setNightOpacity();
+
             //move sun
+            var prevSunHeight = sunParent.y;
+
             sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
             sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
             orbit.angle += sunParent.speed;
 
+            //var sunHeight = sunParent.y;
+
+            if ((nightOpacity > 0) && (prevSunHeight >= sunParent.y) && (dayChanged == false)){
+                console.log('new day');
+                dayChanged = true;
+            } else if ((nightOpacity <= 0) && (prevSunHeight <= sunParent.y) && (dayChanged == true)){
+                dayChanged = false;
+            }
+
             drawCharacter(characters[0]['imageObject'],sunParent.x,sunParent.y,characters[0]['imageObject']['w'],characters[0]['imageObject']['h']);
-            if(averageVolume - volumeCenter > 5){
+            if (averageVolume - volumeCenter > 5){
                 drawCharacter(characters[1]['imageObject'],sunParent.x,sunParent.y,characters[1]['imageObject']['w'],characters[1]['imageObject']['h']);
             }
-            if(averageVolume - volumeCenter > 15){
+            if (averageVolume - volumeCenter > 15){
                 drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
             }
 
@@ -195,7 +209,6 @@ $( document ).ready(function() {
             }
 
             //nighttime objects
-                var nightOpacity = setNightOpacity();
                 if (nightOpacity > 0){
                     //draw night sky
                     ctx.save();
