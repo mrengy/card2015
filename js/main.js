@@ -40,8 +40,8 @@ $( document ).ready(function() {
     var day = 0;
 
     //specific character variables
-    var orbit = {centerX:410, centerY:500, radius:600, angle:130};
-    var sunParent = {x: 189.62520172718212, y:-58.06357011205705,speed:.02};
+    var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
+    var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.02};
     var parentLogged = false;
 
     //detecting start of song after the musical intro
@@ -94,8 +94,6 @@ $( document ).ready(function() {
         //define the image object within the Character
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
-
-        //console.log('character length = '+character.length);
 
         characters.push(this);
         //character[name] = this;
@@ -187,7 +185,6 @@ $( document ).ready(function() {
                 orbit.angle += sunParent.speed;
 
                 if (parentLogged == false){
-                    console.log(sunParent.x , sunParent.y);
                     parentLogged = true;
                 }
                 //detect day change
