@@ -41,8 +41,9 @@ $( document ).ready(function() {
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
-    var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.02};
+    var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
     var parentLogged = false;
+    var maxSunSpeed = .02;
 
     //detecting start of song after the musical intro
     var numPeaks = 0;
@@ -183,6 +184,11 @@ $( document ).ready(function() {
                 sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
                 sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
                 orbit.angle += sunParent.speed;
+                
+                //ease sun speed
+                if (sunParent.speed < maxSunSpeed){
+                sunParent.speed += .0005;
+                }
 
                 if (parentLogged == false){
                     parentLogged = true;
