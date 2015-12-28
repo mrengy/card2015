@@ -40,8 +40,9 @@ $( document ).ready(function() {
     var day = 0;
 
     //specific character variables
-    var orbit = {centerX:410, centerY:500, radius:600, angle:10};
-    var sunParent = {x:-200, y:0,speed:.02};
+    var orbit = {centerX:410, centerY:500, radius:600, angle:130};
+    var sunParent = {x: 189.62520172718212, y:-58.06357011205705,speed:.02};
+    var parentLogged = false;
 
     //detecting start of song after the musical intro
     var numPeaks = 0;
@@ -172,28 +173,33 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
-            if(introDone == false){
+            if (introDone == false) {
                 detectIntroDone();
+            } else { //run only if introDone is true
+                //for detecting day change
+                var nightOpacity = setNightOpacity();
+
+                //move sun
+                var prevSunHeight = sunParent.y;
+
+                sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
+                sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
+                orbit.angle += sunParent.speed;
+
+                if (parentLogged == false){
+                    console.log(sunParent.x , sunParent.y);
+                    parentLogged = true;
+                }
+                //detect day change
+                if ((nightOpacity > 0) && (prevSunHeight >= sunParent.y) && (dayChanged == false)){
+                    day ++;
+                    dayChanged = true;
+                } else if ((nightOpacity <= 0) && (prevSunHeight <= sunParent.y) && (dayChanged == true)){
+                    dayChanged = false;
+                }
             }
-            //for detecting day change
-            var nightOpacity = setNightOpacity();
 
-            //move sun
-            var prevSunHeight = sunParent.y;
-
-            sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
-            sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
-            orbit.angle += sunParent.speed;
-
-            //var sunHeight = sunParent.y;
-
-            if ((nightOpacity > 0) && (prevSunHeight >= sunParent.y) && (dayChanged == false)){
-                day ++;
-                dayChanged = true;
-            } else if ((nightOpacity <= 0) && (prevSunHeight <= sunParent.y) && (dayChanged == true)){
-                dayChanged = false;
-            }
-
+            //sun
             drawCharacter(characters[0]['imageObject'],sunParent.x,sunParent.y,characters[0]['imageObject']['w'],characters[0]['imageObject']['h']);
             if (averageVolume - volumeCenter > 5){
                 drawCharacter(characters[1]['imageObject'],sunParent.x,sunParent.y,characters[1]['imageObject']['w'],characters[1]['imageObject']['h']);
