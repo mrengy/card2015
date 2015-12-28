@@ -45,6 +45,9 @@ $( document ).ready(function() {
     var parentLogged = false;
     var maxSunSpeed = .02;
 
+    //detecting drawing of the static intro screen
+    var introScreenDrawn = false;
+
     //detecting start of song after the musical intro
     var numPeaks = 0;
     var peakMinimum = 40;
@@ -73,6 +76,13 @@ $( document ).ready(function() {
         function imageLoaded(element, index, array){
             return element['imageObject']['loaded'] == true;
         }
+
+        //draw intro screen after tomatovine is loaded
+        if (imageLoaded(characters[0]) && (introScreenDrawn == false)){
+            drawIntroScreen();
+            introScreenDrawn = true;
+        }
+
     }
 
     function createStars(number){
@@ -262,6 +272,10 @@ $( document ).ready(function() {
     function setNightOpacity(){
         var nightOpacity = (sunParent.y-orbit.centerY)/orbit.centerY +.1;
         return nightOpacity;
+    }
+
+    function drawIntroScreen(){
+        drawCharacter(characters[0]['imageObject'],characters[0]['imageObject']['x1'],characters[0]['imageObject']['y1'],characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
     }
 
     function detectIntroDone(){
