@@ -54,14 +54,17 @@ $( document ).ready(function() {
     //load images
     function loadImages(){
         if (!characters[0]){
-            var sun0 = new Character('sun0', sunParent.x, sunParent.y);
+            //create tomatoVine at double size since it will be used at different scales
+            var tomatoVine = new Character('tomatovine', 480, 490, true);
         } else if (!characters[1]){
-            var sun1 = new Character('sun1', sunParent.x, sunParent.y);
+            var sun0 = new Character('sun0', sunParent.x, sunParent.y);
         } else if (!characters[2]){
-            var sun2 = new Character('sun2', sunParent.x, sunParent.y);
+            var sun1 = new Character('sun1', sunParent.x, sunParent.y);
         } else if (!characters[3]){
-            var bed = new Character('bed', 50, 500);
+            var sun2 = new Character('sun2', sunParent.x, sunParent.y);
         } else if (!characters[4]){
+            var bed = new Character('bed', 50, 500);
+        } else if (!characters[5]){
             var plant1 = new Character('plant1', 480, 490);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
@@ -91,7 +94,7 @@ $( document ).ready(function() {
 
     } //end init
 
-    function Character(name, x, y){
+    function Character(name, x, y, doubleSize){
         //define the image object within the Character
         this.imageObject = new Image();
         this.imageObject.src = 'img/'+name+'.png';
@@ -104,8 +107,13 @@ $( document ).ready(function() {
         //conditional used by Chrome
         if (this.imageObject.addEventListener){
             this.imageObject.addEventListener('load', function(){
-                var imgWidth = this.naturalWidth;
-                var imgHeight = this.naturalHeight;
+                if (doubleSize == true){
+                    var imgWidth = this.naturalWidth/2;
+                    var imgHeight = this.naturalHeight/2;
+                } else {
+                    var imgWidth = this.naturalWidth;
+                    var imgHeight = this.naturalHeight;
+                }
 
                 //set natural width and natural height to object
                 characters[characterPosition]['imageObject']['w'] = characters[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -123,8 +131,13 @@ $( document ).ready(function() {
             });
         } else if (this.imageObject.attachEvent){
             this.imageObject.attachEvent('onload', function(){
-                var imgWidth = this.naturalWidth;
-                var imgHeight = this.naturalHeight;
+                if (doubleSize == true){
+                    var imgWidth = this.naturalWidth/2;
+                    var imgHeight = this.naturalHeight/2;
+                } else {
+                    var imgWidth = this.naturalWidth;
+                    var imgHeight = this.naturalHeight;
+                }
 
                 //set natural width and natural height to object
                 characters[characterPosition]['imageObject']['w'] = characters[characterPosition]['imageObject']['w0'] = imgWidth;
@@ -203,29 +216,29 @@ $( document ).ready(function() {
             }
 
             //sun
-            drawCharacter(characters[0]['imageObject'],sunParent.x,sunParent.y,characters[0]['imageObject']['w'],characters[0]['imageObject']['h']);
+            drawCharacter(characters[1]['imageObject'],sunParent.x,sunParent.y,characters[1]['imageObject']['w'],characters[1]['imageObject']['h']);
             if (averageVolume - volumeCenter > 5){
-                drawCharacter(characters[1]['imageObject'],sunParent.x,sunParent.y,characters[1]['imageObject']['w'],characters[1]['imageObject']['h']);
+                drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
             }
             if (averageVolume - volumeCenter > 15){
-                drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
+                drawCharacter(characters[3]['imageObject'],sunParent.x,sunParent.y,characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
             }
             
             //bed
-            drawCharacter(characters[3]['imageObject'],characters[3]['imageObject']['x1'],characters[3]['imageObject']['y1'],characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
+            drawCharacter(characters[4]['imageObject'],characters[4]['imageObject']['x1'],characters[4]['imageObject']['y1'],characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
 
             //plant1
             if(day == 1){
                 if(averageVolume > 0){
                 ctx.save();
-                ctx.translate(characters[4]['imageObject']['w']/2,0);
-                ctx.translate(characters[4]['imageObject']['x1'], (characters[4]['imageObject']['y1']+characters[4]['imageObject']['h']));
+                ctx.translate(characters[5]['imageObject']['w']/2,0);
+                ctx.translate(characters[5]['imageObject']['x1'], (characters[5]['imageObject']['y1']+characters[5]['imageObject']['h']));
                 ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
-                ctx.translate(-characters[4]['imageObject']['w']/2, -characters[4]['imageObject']['h']);
-                drawCharacter(characters[4]['imageObject'], 0, 0, characters[4]['imageObject']['w'], characters[4]['imageObject']['h']);
+                ctx.translate(-characters[5]['imageObject']['w']/2, -characters[5]['imageObject']['h']);
+                drawCharacter(characters[5]['imageObject'], 0, 0, characters[5]['imageObject']['w'], characters[5]['imageObject']['h']);
                 ctx.restore();
                 } else {
-                    drawCharacter(characters[4]['imageObject'],characters[4]['imageObject']['x1'],characters[4]['imageObject']['y1'],characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
+                    drawCharacter(characters[5]['imageObject'],characters[5]['imageObject']['x1'],characters[5]['imageObject']['y1'],characters[5]['imageObject']['w'],characters[5]['imageObject']['h']);
                 }
             }
             //nighttime objects
