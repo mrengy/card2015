@@ -25,10 +25,11 @@ $( document ).ready(function() {
     var WIDTH;
     var HEIGHT;
     var drawInterval = 0;
+    var drawIntroInterval = 0;
     var frame = 0;
     var increment = 1;
     var volumeCenter = 20;
-    var framesBetweenShift = 30;
+    var framesPerMs = 33;
 
     //reusable character variables
     var characters = [];
@@ -44,6 +45,7 @@ $( document ).ready(function() {
     var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
     var parentLogged = false;
     var maxSunSpeed = .02;
+    var introOpacity = 1;
 
     //detecting drawing of the static intro screen
     var introScreenDrawn = false;
@@ -190,7 +192,8 @@ $( document ).ready(function() {
             loadSound("audio/home-grown-tomatoes.mp3");
         }
 
-        drawInterval = setInterval(draw, 33);
+        drawIntroInterval = setInterval(drawIntroScreen, framesPerMs);
+
     }
 
     function draw(){
@@ -278,35 +281,65 @@ $( document ).ready(function() {
     }
 
     function drawIntroScreen(){
-        //top left
-        ctx.save();
-        ctx.rotate(-15*Math.PI/180);
-        drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
-        ctx.restore();
+        if(introOpacity < 1){
+            draw();
+        }
 
-        //top right
-        ctx.save();
-        ctx.translate(WIDTH,0);
-        ctx.rotate(15*Math.PI/180);
-        drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
-        ctx.restore();
+        //remove the timer for the intro and set another timer for the main drawing when intro opacity is 0;
+        if (introOpacity <= 0){
+            drawInterval = setInterval(draw, framesPerMs);
+            clearInterval(drawIntroInterval);
+        } else {
+            //draw white background below tomato vines
+            ctx.save();
+            ctx.fillStyle = 'rgba(255,255,255,'+introOpacity+')';
+            ctx.fillRect(0,0,WIDTH,HEIGHT);
+            ctx.restore();
 
-        //bottom right
-        ctx.save();
-        ctx.translate(WIDTH,HEIGHT);
-        ctx.rotate(180*Math.PI/180);
-        ctx.rotate(-15*Math.PI/180);
-        drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
-        ctx.restore();
+            //opacity for tomato vine characters
+            ctx.save();
+            ctx.globalAlpha = introOpacity;
 
-        //bottom left
-        ctx.save();
-        ctx.translate(0,HEIGHT);
-        ctx.rotate(180*Math.PI/180);
-        ctx.rotate(15*Math.PI/180);
-        drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
-        ctx.restore();
+                //top left
+                ctx.save();
+                ctx.rotate(-15*Math.PI/180);
+                drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
+                ctx.restore();
 
+                //top right
+                ctx.save();
+                ctx.translate(WIDTH,0);
+                ctx.rotate(15*Math.PI/180);
+                drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
+                ctx.restore();
+
+                //bottom right
+                ctx.save();
+                ctx.translate(WIDTH,HEIGHT);
+                ctx.rotate(180*Math.PI/180);
+                ctx.rotate(-15*Math.PI/180);
+                drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
+                ctx.restore();
+
+                //bottom left
+                ctx.save();
+                ctx.translate(0,HEIGHT);
+                ctx.rotate(180*Math.PI/180);
+                ctx.rotate(15*Math.PI/180);
+                drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
+                ctx.restore();
+
+                //draw white background above tomato vines
+                ctx.save();
+                ctx.fillStyle = 'rgba(255,255,255,'+(1-introOpacity)+')';
+                ctx.fillRect(0,0,WIDTH,HEIGHT);
+                ctx.restore();
+
+                introOpacity -= .01;
+                console.log('intro drawn');
+
+            ctx.restore();
+        }
     }
 
     function detectSongIntroDone(){
