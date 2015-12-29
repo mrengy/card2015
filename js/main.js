@@ -24,7 +24,7 @@ $( document ).ready(function() {
     var ctx;
     var WIDTH;
     var HEIGHT;
-    var intervalId = 0;
+    var drawInterval = 0;
     var frame = 0;
     var increment = 1;
     var volumeCenter = 20;
@@ -52,7 +52,7 @@ $( document ).ready(function() {
     var numPeaks = 0;
     var peakMinimum = 40;
     var peaksUntilStart = 52;
-    var introDone = false;
+    var songIntroDone = false;
 
     //load images
     function loadImages(){
@@ -183,14 +183,14 @@ $( document ).ready(function() {
 
     function startDrawing(){
         $('button#play').hide();
-        intervalId = setInterval(draw, 33);
-
         //load the wav only if we need it, otherwise load the mp3
         if (typeof window.waapisimContexts != 'undefined'){
             loadSound("audio/home-grown-tomatoes.wav");
         } else {
             loadSound("audio/home-grown-tomatoes.mp3");
         }
+
+        drawInterval = setInterval(draw, 33);
     }
 
     function draw(){
@@ -198,9 +198,9 @@ $( document ).ready(function() {
         clear();
         
         //draw characters
-            if (introDone == false) {
-                detectIntroDone();
-            } else { //run only if introDone is true
+            if (songIntroDone == false) {
+                detectSongIntroDone();
+            } else { //run only if songIntroDone is true
                 //for detecting day change
                 var nightOpacity = setNightOpacity();
 
@@ -309,13 +309,12 @@ $( document ).ready(function() {
 
     }
 
-    function detectIntroDone(){
+    function detectSongIntroDone(){
         if (averageVolume > peakMinimum){
                 numPeaks ++;
         }
         if (numPeaks >= peaksUntilStart){
-            introDone = true;
-            console.log('intro done');
+            songIntroDone = true;
         }
     }
     
