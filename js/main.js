@@ -278,14 +278,25 @@ $( document ).ready(function() {
     }
 
     function drawIntroScreen(){
+        //top left
         ctx.save();
         ctx.rotate(-15*Math.PI/180);
         drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
         ctx.restore();
 
+        //top right
         ctx.save();
+        ctx.translate(WIDTH,0);
         ctx.rotate(15*Math.PI/180);
-        drawCharacter(characters[1]['imageObject'],WIDTH-characters[1]['imageObject']['w']*2,15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
+        drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
+        ctx.restore();
+
+        //bottom right
+        ctx.save();
+        ctx.translate(WIDTH,HEIGHT);
+        ctx.rotate(180*Math.PI/180);
+        ctx.rotate(-15*Math.PI/180);
+        drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
         ctx.restore();
 
     }
