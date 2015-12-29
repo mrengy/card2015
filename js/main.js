@@ -51,7 +51,7 @@ $( document ).ready(function() {
     //detecting start of song after the musical intro
     var numPeaks = 0;
     var peakMinimum = 40;
-    var peaksUntilStart = 50;
+    var peaksUntilStart = 52;
     var introDone = false;
 
     //load images
@@ -60,14 +60,17 @@ $( document ).ready(function() {
             //create tomatoVine at double size since it will be used at different scales
             var tomatoVine = new Character('tomatovine', 480, 490, true);
         } else if (!characters[1]){
-            var sun0 = new Character('sun0', sunParent.x, sunParent.y);
+            //create tomatoVine at double size since it will be used at different scales
+            var tomatoVineFlipped = new Character('tomatovine-flipped', 480, 490, true);
         } else if (!characters[2]){
-            var sun1 = new Character('sun1', sunParent.x, sunParent.y);
+            var sun0 = new Character('sun0', sunParent.x, sunParent.y);
         } else if (!characters[3]){
-            var sun2 = new Character('sun2', sunParent.x, sunParent.y);
+            var sun1 = new Character('sun1', sunParent.x, sunParent.y);
         } else if (!characters[4]){
-            var bed = new Character('bed', 50, 500);
+            var sun2 = new Character('sun2', sunParent.x, sunParent.y);
         } else if (!characters[5]){
+            var bed = new Character('bed', 50, 500);
+        } else if (!characters[6]){
             var plant1 = new Character('plant1', 480, 490);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
@@ -78,7 +81,7 @@ $( document ).ready(function() {
         }
 
         //draw intro screen after tomatovine is loaded
-        if (imageLoaded(characters[0]) && (introScreenDrawn == false)){
+        if ((imageLoaded(characters[0])) && (imageLoaded(characters[1])) && (introScreenDrawn == false)){
             drawIntroScreen();
             introScreenDrawn = true;
         }
@@ -226,29 +229,29 @@ $( document ).ready(function() {
             }
 
             //sun
-            drawCharacter(characters[1]['imageObject'],sunParent.x,sunParent.y,characters[1]['imageObject']['w'],characters[1]['imageObject']['h']);
+            drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
             if (averageVolume - volumeCenter > 5){
-                drawCharacter(characters[2]['imageObject'],sunParent.x,sunParent.y,characters[2]['imageObject']['w'],characters[2]['imageObject']['h']);
+                drawCharacter(characters[3]['imageObject'],sunParent.x,sunParent.y,characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
             }
             if (averageVolume - volumeCenter > 15){
-                drawCharacter(characters[3]['imageObject'],sunParent.x,sunParent.y,characters[3]['imageObject']['w'],characters[3]['imageObject']['h']);
+                drawCharacter(characters[4]['imageObject'],sunParent.x,sunParent.y,characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
             }
             
             //bed
-            drawCharacter(characters[4]['imageObject'],characters[4]['imageObject']['x1'],characters[4]['imageObject']['y1'],characters[4]['imageObject']['w'],characters[4]['imageObject']['h']);
+            drawCharacter(characters[5]['imageObject'],characters[5]['imageObject']['x1'],characters[5]['imageObject']['y1'],characters[5]['imageObject']['w'],characters[5]['imageObject']['h']);
 
             //plant1
             if(day == 1){
                 if(averageVolume > 0){
                 ctx.save();
-                ctx.translate(characters[5]['imageObject']['w']/2,0);
-                ctx.translate(characters[5]['imageObject']['x1'], (characters[5]['imageObject']['y1']+characters[5]['imageObject']['h']));
+                ctx.translate(characters[6]['imageObject']['w']/2,0);
+                ctx.translate(characters[6]['imageObject']['x1'], (characters[6]['imageObject']['y1']+characters[6]['imageObject']['h']));
                 ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
-                ctx.translate(-characters[5]['imageObject']['w']/2, -characters[5]['imageObject']['h']);
-                drawCharacter(characters[5]['imageObject'], 0, 0, characters[5]['imageObject']['w'], characters[5]['imageObject']['h']);
+                ctx.translate(-characters[6]['imageObject']['w']/2, -characters[6]['imageObject']['h']);
+                drawCharacter(characters[6]['imageObject'], 0, 0, characters[6]['imageObject']['w'], characters[6]['imageObject']['h']);
                 ctx.restore();
                 } else {
-                    drawCharacter(characters[5]['imageObject'],characters[5]['imageObject']['x1'],characters[5]['imageObject']['y1'],characters[5]['imageObject']['w'],characters[5]['imageObject']['h']);
+                    drawCharacter(characters[6]['imageObject'],characters[6]['imageObject']['x1'],characters[6]['imageObject']['y1'],characters[6]['imageObject']['w'],characters[6]['imageObject']['h']);
                 }
             }
             //nighttime objects
@@ -275,7 +278,16 @@ $( document ).ready(function() {
     }
 
     function drawIntroScreen(){
-        drawCharacter(characters[0]['imageObject'],characters[0]['imageObject']['x1'],characters[0]['imageObject']['y1'],characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
+        ctx.save();
+        ctx.rotate(-15*Math.PI/180);
+        drawCharacter(characters[0]['imageObject'],0,15,characters[0]['imageObject']['w']*2,characters[0]['imageObject']['h']*2);
+        ctx.restore();
+
+        ctx.save();
+        ctx.rotate(15*Math.PI/180);
+        drawCharacter(characters[1]['imageObject'],WIDTH-characters[1]['imageObject']['w']*2,15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
+        ctx.restore();
+
     }
 
     function detectIntroDone(){
