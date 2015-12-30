@@ -44,7 +44,7 @@ $( document ).ready(function() {
     var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
     var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
     var parentLogged = false;
-    var maxSunSpeed = .02;
+    var maxSunSpeed = .1;
     var introOpacity = 1;
 
     //detecting drawing of the static intro screen
@@ -75,7 +75,7 @@ $( document ).ready(function() {
         } else if (!characters[6]){
             var plant1 = new Character('plant1', 480, 490);
         } else if (!characters[7]){
-            var plant2 = new Character('plant2', 480, 490);
+            var plant2 = new Character('plant2', 460, 400);
         } else if (!characters[8]){
             var plant3 = new Character('plant3', 480, 490);
         } else if (!characters[9]){
@@ -113,7 +113,6 @@ $( document ).ready(function() {
     function createStars(number){
         for (var i = 0; i < number; i++){
             createStar(getRandomInt(0,WIDTH), getRandomInt(0,500), getRandomInt(1,3),getRandomInt(0,10)/10);
-            console.log('star created');
         }
     }
 
