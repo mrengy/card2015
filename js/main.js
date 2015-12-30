@@ -280,6 +280,21 @@ $( document ).ready(function() {
                     }
                 }
 
+                //plant2
+                if (day == 2){
+                    if(averageVolume > 0){
+                    ctx.save();
+                    ctx.translate(characters[7]['imageObject']['w']/2,0);
+                    ctx.translate(characters[7]['imageObject']['x1'], (characters[7]['imageObject']['y1']+characters[7]['imageObject']['h']));
+                    ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
+                    ctx.translate(-characters[7]['imageObject']['w']/2, -characters[7]['imageObject']['h']);
+                    drawCharacter(characters[7]['imageObject'], 0, 0, characters[7]['imageObject']['w'], characters[7]['imageObject']['h']);
+                    ctx.restore();
+                    } else {
+                        drawCharacter(characters[7]['imageObject'],characters[7]['imageObject']['x1'],characters[7]['imageObject']['y1'],characters[7]['imageObject']['w'],characters[7]['imageObject']['h']);
+                    }
+                }
+
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
             }
