@@ -35,6 +35,8 @@ $( document ).ready(function() {
     var characters = [];
     var stars = [];
     var starIndex = 0;
+    var thisCharacterWidth = 0;
+    var thisCharacterHeight = 0;
 
     //day variables
     var dayChanged = false;
@@ -97,7 +99,8 @@ $( document ).ready(function() {
         } else if (!characters[16]){
             var bed_front = new Character('bed-front', 50, 500);
         } else if (!characters[17]){
-            var tomato = new Character('tomato', 50, 500);
+            //create tomato at double size since it will be used at different scales
+            var tomato = new Character('tomato', 400, 435, true);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
@@ -270,7 +273,7 @@ $( document ).ready(function() {
 
                 //plant1
                 if (day == 1){
-                    if(averageVolume > 0){
+                    if (averageVolume - volumeCenter > 0){
                     ctx.save();
                     ctx.translate(characters[6]['imageObject']['w']/2,0);
                     ctx.translate(characters[6]['imageObject']['x1'], (characters[6]['imageObject']['y1']+characters[6]['imageObject']['h']));
@@ -285,7 +288,7 @@ $( document ).ready(function() {
 
                 //plant2
                 if (day == 2){
-                    if(averageVolume > 0){
+                    if (averageVolume - volumeCenter > 0){
                     ctx.save();
                     ctx.translate(characters[7]['imageObject']['w']/2,0);
                     ctx.translate(characters[7]['imageObject']['x1'], (characters[7]['imageObject']['y1']+characters[7]['imageObject']['h']));
@@ -300,7 +303,7 @@ $( document ).ready(function() {
 
                 //plant3
                 if (day == 3){
-                    if(averageVolume > 0){
+                    if (averageVolume - volumeCenter > 0){
                     ctx.save();
                     ctx.translate(characters[8]['imageObject']['w']/2,0);
                     ctx.translate(characters[8]['imageObject']['x1'], (characters[8]['imageObject']['y1']+characters[8]['imageObject']['h']));
@@ -313,16 +316,20 @@ $( document ).ready(function() {
                     }
                 }
 
-                //plant4
+                
                 if (day >= 4){
+                    //plant4
                     drawCharacter(characters[9]['imageObject'],characters[9]['imageObject']['x1'],characters[9]['imageObject']['y1'],characters[9]['imageObject']['w'],characters[9]['imageObject']['h']);
+                    //tomatoes
+                    drawCharacter(characters[17]['imageObject'],characters[17]['imageObject']['x1'],characters[17]['imageObject']['y1'],pulseCharacter(characters[17]['imageObject']['w'],characters[17]['imageObject']['h']),thisCharacterHeight);
+                
+                    
                 }
 
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
                 
-                //tomatoes
-                
+
 
             }
             //nighttime objects
@@ -442,6 +449,18 @@ $( document ).ready(function() {
         if (index.thisOpacity <= 0){
             index.thisDirection = 'up';
         }
+    }
+
+    function pulseCharacter(initialWidth, initialHeight){
+        if (averageVolume - volumeCenter > 0){
+            thisCharacterWidth = initialWidth + averageVolume - volumeCenter;
+        } else {
+            thisCharacterWidth = initialWidth;
+        }
+        //set height proportionally to width
+        thisCharacterHeight = thisCharacterWidth * (initialHeight / initialWidth);
+
+        return thisCharacterWidth;
     }
 
     function clear() {
