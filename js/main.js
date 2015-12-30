@@ -74,6 +74,26 @@ $( document ).ready(function() {
             var bed = new Character('bed', 50, 500);
         } else if (!characters[6]){
             var plant1 = new Character('plant1', 480, 490);
+        } else if (!characters[7]){
+            var plant2 = new Character('plant2', 480, 490);
+        } else if (!characters[8]){
+            var plant3 = new Character('plant3', 480, 490);
+        } else if (!characters[9]){
+            var plant4 = new Character('plant4', 480, 490);
+        } else if (!characters[10]){
+            var can = new Character('can', 20, 490);
+        } else if (!characters[11]){
+            var kepler1 = new Character('kepler1', 800, 20);
+        } else if (!characters[12]){
+            var kepler4 = new Character('kepler4', 800, 20);
+        } else if (!characters[13]){
+            var lightning = new Character('lightning', 200, 490);
+        } else if (!characters[14]){
+            var fry = new Character('fry', 200, 490);
+        } else if (!characters[15]){
+            var can_front = new Character('can-front', 20, 490);
+        } else if (!characters[16]){
+            var bed_front = new Character('bed-front', 50, 500);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
