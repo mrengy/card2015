@@ -38,13 +38,15 @@ $( document ).ready(function() {
 
     //day variables
     var dayChanged = false;
-    var day = 0;
+    var day = 4;
+    // 0
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
     var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
     var parentLogged = false;
-    var maxSunSpeed = .1;
+    var maxSunSpeed = .02;
+    // .02
     var introOpacity = 1;
 
     //detecting drawing of the static intro screen
@@ -94,6 +96,8 @@ $( document ).ready(function() {
             var can_front = new Character('can-front', 20, 490);
         } else if (!characters[16]){
             var bed_front = new Character('bed-front', 50, 500);
+        } else if (!characters[17]){
+            var tomato = new Character('tomato', 50, 500);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
@@ -316,6 +320,10 @@ $( document ).ready(function() {
 
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
+                
+                //tomatoes
+                
+
             }
             //nighttime objects
                 if (nightOpacity > 0){
