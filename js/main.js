@@ -75,11 +75,11 @@ $( document ).ready(function() {
         } else if (!characters[6]){
             var plant1 = new Character('plant1', 480, 490);
         } else if (!characters[7]){
-            var plant2 = new Character('plant2', 460, 400);
+            var plant2 = new Character('plant2', 460, 405);
         } else if (!characters[8]){
-            var plant3 = new Character('plant3', 480, 490);
+            var plant3 = new Character('plant3', 440, 350);
         } else if (!characters[9]){
-            var plant4 = new Character('plant4', 480, 490);
+            var plant4 = new Character('plant4', 345, 325);
         } else if (!characters[10]){
             var can = new Character('can', 20, 490);
         } else if (!characters[11]){
@@ -292,6 +292,26 @@ $( document ).ready(function() {
                     } else {
                         drawCharacter(characters[7]['imageObject'],characters[7]['imageObject']['x1'],characters[7]['imageObject']['y1'],characters[7]['imageObject']['w'],characters[7]['imageObject']['h']);
                     }
+                }
+
+                //plant3
+                if (day == 3){
+                    if(averageVolume > 0){
+                    ctx.save();
+                    ctx.translate(characters[8]['imageObject']['w']/2,0);
+                    ctx.translate(characters[8]['imageObject']['x1'], (characters[8]['imageObject']['y1']+characters[8]['imageObject']['h']));
+                    ctx.rotate((averageVolume - volumeCenter)*Math.PI/180);
+                    ctx.translate(-characters[8]['imageObject']['w']/2, -characters[8]['imageObject']['h']);
+                    drawCharacter(characters[8]['imageObject'], 0, 0, characters[8]['imageObject']['w'], characters[8]['imageObject']['h']);
+                    ctx.restore();
+                    } else {
+                        drawCharacter(characters[8]['imageObject'],characters[8]['imageObject']['x1'],characters[8]['imageObject']['y1'],characters[8]['imageObject']['w'],characters[8]['imageObject']['h']);
+                    }
+                }
+
+                //plant4
+                if (day >= 4){
+                    drawCharacter(characters[9]['imageObject'],characters[9]['imageObject']['x1'],characters[9]['imageObject']['y1'],characters[9]['imageObject']['w'],characters[9]['imageObject']['h']);
                 }
 
                 //bed front
