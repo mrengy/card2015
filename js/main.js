@@ -48,7 +48,7 @@ $( document ).ready(function() {
     var maxSunSpeed = .01;
     // .01
     var introOpacity = 1;
-    var lightningSpeed = lightningMaxSpeed = 5;
+    var lightningSpeed = lightningMaxSpeed = usSpeed = usMaxSpeed = 7;
     var lightningDirection = 'up';
     var lightningRotation = 0;
 
@@ -90,7 +90,7 @@ $( document ).ready(function() {
         } else if (!characters[11]){
             var kepler1 = new Character('kepler1', 800, 20);
         } else if (!characters[12]){
-            var kepler4 = new Character('kepler4', 800, 500);
+            var kepler4 = new Character('kepler4', 700, 480);
         } else if (!characters[13]){
             var lightning = new Character('lightning', 185, 540);
         } else if (!characters[14]){
@@ -103,7 +103,7 @@ $( document ).ready(function() {
             //create tomato at double size since it will be used at different scales
             var tomato = new Character('tomato', 400, 435, true);
         } else if (!characters[18]){
-            var us = new Character('us', 850, 700);
+            var us = new Character('us', 50, 1000);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
@@ -389,6 +389,19 @@ $( document ).ready(function() {
                 if (day >= 6){
                     //kepler
                     drawCharacter(characters[12]['imageObject'],characters[12]['imageObject']['x1'],characters[12]['imageObject']['y1'],characters[12]['imageObject']['w'],characters[12]['imageObject']['h']);
+                    
+                    //us
+                    var usMaxHeight = 630;
+                    if (characters[18]['imageObject']['y1'] > usMaxHeight){
+                        characters[18]['imageObject']['y1'] -= usSpeed;
+                        if (characters[18]['imageObject']['y1'] - usMaxHeight < 150 && usSpeed > .17) {
+                            usSpeed -= .17;
+
+                            console.log(usSpeed);
+                        }
+                    }
+                    drawCharacter(characters[18]['imageObject'],characters[18]['imageObject']['x1'],characters[18]['imageObject']['y1'],characters[18]['imageObject']['w'],characters[18]['imageObject']['h']);
+
                 }
 
             } //end day objects
