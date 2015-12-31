@@ -326,6 +326,18 @@ $( document ).ready(function() {
                 if (day >= 4){
                     //plant4
                     drawCharacter(characters[9]['imageObject'],characters[9]['imageObject']['x1'],characters[9]['imageObject']['y1'],characters[9]['imageObject']['w'],characters[9]['imageObject']['h']);
+                    
+                    //lightning
+                    ctx.save();
+                    ctx.translate(characters[13]['imageObject']['x1']+characters[13]['imageObject']['w']/2,characters[13]['imageObject']['y1']+characters[13]['imageObject']['h']/2);
+                    ctx.rotate(lightningRotation*Math.PI/180);
+                    drawCharacter(characters[13]['imageObject'],-characters[13]['imageObject']['w']/2,-characters[13]['imageObject']['h']/2,characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
+                    ctx.restore();
+
+                    jumpLightning();
+
+                    //can front
+                    drawCharacter(characters[15]['imageObject'],characters[15]['imageObject']['x1'],characters[15]['imageObject']['y1'],characters[15]['imageObject']['w'],characters[15]['imageObject']['h']);
                 }
 
                 //bed front
@@ -372,20 +384,7 @@ $( document ).ready(function() {
                     pulseCharacter(17, 502, 460, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                 }
 
-                //jumping lightning
-                if (day >= 6){
-                    //lightning
-                    ctx.save();
-                    ctx.translate(characters[13]['imageObject']['x1']+characters[13]['imageObject']['w']/2,characters[13]['imageObject']['y1']+characters[13]['imageObject']['h']/2);
-                    ctx.rotate(lightningRotation*Math.PI/180);
-                    drawCharacter(characters[13]['imageObject'],-characters[13]['imageObject']['w']/2,-characters[13]['imageObject']['h']/2,characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
-                    ctx.restore();
-
-                    jumpLightning();
-
-                    //can front
-                    drawCharacter(characters[15]['imageObject'],characters[15]['imageObject']['x1'],characters[15]['imageObject']['y1'],characters[15]['imageObject']['w'],characters[15]['imageObject']['h']);
-                }
+                
             } //end day objects
 
             //nighttime objects
