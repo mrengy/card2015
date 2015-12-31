@@ -102,6 +102,8 @@ $( document ).ready(function() {
         } else if (!characters[17]){
             //create tomato at double size since it will be used at different scales
             var tomato = new Character('tomato', 400, 435, true);
+        } else if (!characters[18]){
+            var us = new Character('us', 850, 700);
         } else if(characters.every(imageLoaded)){
             $('button#play').show();
         }
