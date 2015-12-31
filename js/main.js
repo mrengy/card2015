@@ -48,6 +48,8 @@ $( document ).ready(function() {
     var maxSunSpeed = .01;
     // .01
     var introOpacity = 1;
+    var lightningSpeed = lightningMaxSpeed = 5;
+    var lightningDirection = 'up';
 
     //detecting drawing of the static intro screen
     var introScreenDrawn = false;
@@ -89,7 +91,7 @@ $( document ).ready(function() {
         } else if (!characters[12]){
             var kepler4 = new Character('kepler4', 800, 20);
         } else if (!characters[13]){
-            var lightning = new Character('lightning', 150, 510);
+            var lightning = new Character('lightning', 170, 550);
         } else if (!characters[14]){
             var fry = new Character('fry', 200, 490);
         } else if (!characters[15]){
@@ -159,8 +161,8 @@ $( document ).ready(function() {
                 characters[characterPosition]['imageObject']['h'] = characters[characterPosition]['imageObject']['h0'] = imgHeight;
 
                 //set initial x and y position
-                characters[characterPosition]['imageObject']['x1'] = x;
-                characters[characterPosition]['imageObject']['y1'] = y;
+                characters[characterPosition]['imageObject']['x1'] = characters[characterPosition]['imageObject']['x0'] = x;
+                characters[characterPosition]['imageObject']['y1'] = characters[characterPosition]['imageObject']['y0'] = y;
 
                 //set loaded property for the object once loading is done
                 characters[characterPosition]['imageObject']['loaded'] = true;
@@ -183,8 +185,8 @@ $( document ).ready(function() {
                 characters[characterPosition]['imageObject']['h'] = characters[characterPosition]['imageObject']['h0'] = imgHeight;
 
                 //set initial x and y position
-                characters[characterPosition]['imageObject']['x1'] = x;
-                characters[characterPosition]['imageObject']['y1'] = y;
+                characters[characterPosition]['imageObject']['x1'] = characters[characterPosition]['imageObject']['x0'] = x;
+                characters[characterPosition]['imageObject']['y1'] = characters[characterPosition]['imageObject']['y0'] = y;
 
                 //set loaded property for the object once loading is done
                 characters[characterPosition]['imageObject']['loaded'] = true;
@@ -373,7 +375,7 @@ $( document ).ready(function() {
                 if (day >= 6){
                     //lightning
                     drawCharacter(characters[13]['imageObject'],characters[13]['imageObject']['x1'],characters[13]['imageObject']['y1'],characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
-                    
+                    jumpLightning();
                     //can front
                     drawCharacter(characters[15]['imageObject'],characters[15]['imageObject']['x1'],characters[15]['imageObject']['y1'],characters[15]['imageObject']['w'],characters[15]['imageObject']['h']);
                 }
@@ -520,6 +522,34 @@ $( document ).ready(function() {
         drawCharacter(characters[characterIndex]['imageObject'], x, y, thisCharacterWidth, thisCharacterHeight);
 
         ctx.restore();
+    }
+
+    function jumpLightning(){
+        var lightningMaxHeight = 30;
+        var lightningMinHeight = characters[13]['imageObject']['y0'];
+
+        if (lightningDirection == 'up') {
+            //up
+            characters[13]['imageObject']['y1'] -= lightningSpeed;
+
+            //slow down the ascent
+            if ( (characters[13]['imageObject']['y1'] - lightningMaxHeight < 100) && (lightningSpeed > 0)) {
+                lightningSpeed -= .2;
+            }
+            if (lightningSpeed <= 0){
+                lightningDirection = 'down';
+            }
+        } else {
+            //down
+            if (characters[13]['imageObject']['y1'] < lightningMinHeight){
+                characters[13]['imageObject']['y1'] += lightningSpeed;
+
+                //gain speed down
+                if ( (characters[13]['imageObject']['y1'] - lightningMaxHeight < 100) && (lightningSpeed < lightningMaxSpeed)) {
+                    lightningSpeed += .2;
+                }
+            }
+        }
     }
 
     function clear() {
