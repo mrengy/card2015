@@ -50,6 +50,7 @@ $( document ).ready(function() {
     var introOpacity = 1;
     var lightningSpeed = lightningMaxSpeed = 5;
     var lightningDirection = 'up';
+    var lightningRotation = 0;
 
     //detecting drawing of the static intro screen
     var introScreenDrawn = false;
@@ -91,7 +92,7 @@ $( document ).ready(function() {
         } else if (!characters[12]){
             var kepler4 = new Character('kepler4', 800, 20);
         } else if (!characters[13]){
-            var lightning = new Character('lightning', 170, 550);
+            var lightning = new Character('lightning', 185, 540);
         } else if (!characters[14]){
             var fry = new Character('fry', 200, 490);
         } else if (!characters[15]){
@@ -374,8 +375,14 @@ $( document ).ready(function() {
                 //jumping lightning
                 if (day >= 6){
                     //lightning
-                    drawCharacter(characters[13]['imageObject'],characters[13]['imageObject']['x1'],characters[13]['imageObject']['y1'],characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
+                    ctx.save();
+                    ctx.translate(characters[13]['imageObject']['x1']+characters[13]['imageObject']['w']/2,characters[13]['imageObject']['y1']+characters[13]['imageObject']['h']/2);
+                    ctx.rotate(lightningRotation*Math.PI/180);
+                    drawCharacter(characters[13]['imageObject'],-characters[13]['imageObject']['w']/2,-characters[13]['imageObject']['h']/2,characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
+                    ctx.restore();
+
                     jumpLightning();
+
                     //can front
                     drawCharacter(characters[15]['imageObject'],characters[15]['imageObject']['x1'],characters[15]['imageObject']['y1'],characters[15]['imageObject']['w'],characters[15]['imageObject']['h']);
                 }
@@ -539,6 +546,7 @@ $( document ).ready(function() {
             if (lightningSpeed <= 0){
                 lightningDirection = 'down';
             }
+
         } else {
             //down
             if (characters[13]['imageObject']['y1'] < lightningMinHeight){
@@ -553,8 +561,13 @@ $( document ).ready(function() {
 
                 function reverseDirection(){
                     lightningDirection = 'up';
+                    lightningRotation = 0;
                 }
             }
+        }
+        //rotate at the peak when the speed slows down
+        if (lightningSpeed < lightningMaxSpeed && lightningRotation < 180){
+            lightningRotation += 5;
         }
     }
 
