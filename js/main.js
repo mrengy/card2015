@@ -52,8 +52,9 @@ $( document ).ready(function() {
     var lightningDirection = 'up';
     var lightningRotation = 0;
 
-    //detecting drawing of the static intro screen
+    //detecting start and end
     var introScreenDrawn = false;
+    var lastDay = 7;
 
     //detecting start of song after the musical intro
     var numPeaks = 0;
@@ -232,7 +233,7 @@ $( document ).ready(function() {
         //draw characters
             if (songIntroDone == false) {
                 detectSongIntroDone();
-            } else { //run only if songIntroDone is true
+            } else if (day < lastDay) { //run only if songIntroDone is true
                 //for detecting day change
                 var nightOpacity = setNightOpacity();
 
@@ -392,6 +393,8 @@ $( document ).ready(function() {
                 }
 
                 if (day >= 7){
+                    
+
                     //us
                     var usMaxHeight = 630;
                     if (characters[18]['imageObject']['y1'] > usMaxHeight){
