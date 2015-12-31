@@ -35,12 +35,10 @@ $( document ).ready(function() {
     var characters = [];
     var stars = [];
     var starIndex = 0;
-    var thisCharacterWidth = 0;
-    var thisCharacterHeight = 0;
 
     //day variables
     var dayChanged = false;
-    var day = 0;
+    var day = 5;
     // 0
 
     //specific character variables
@@ -484,6 +482,9 @@ $( document ).ready(function() {
     }
 
     function pulseCharacter(characterIndex, x, y, initialWidth, initialHeight){
+        var thisCharacterWidth;
+        var thisCharacterHeight;
+
         ctx.save();
 
         //the pulsing, only if volume is above threshold
