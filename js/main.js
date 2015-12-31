@@ -321,7 +321,7 @@ $( document ).ready(function() {
                     //plant4
                     drawCharacter(characters[9]['imageObject'],characters[9]['imageObject']['x1'],characters[9]['imageObject']['y1'],characters[9]['imageObject']['w'],characters[9]['imageObject']['h']);
                     //tomatoes
-                    drawCharacter(characters[17]['imageObject'],characters[17]['imageObject']['x1'],characters[17]['imageObject']['y1'],pulseCharacter(characters[17]['imageObject']['w'],characters[17]['imageObject']['h']),thisCharacterHeight);
+                    
                 
                     
                 }
@@ -329,6 +329,8 @@ $( document ).ready(function() {
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
                 
+                //tomatoes
+                pulseCharacter(17, characters[17]['imageObject']['x1'], characters[17]['imageObject']['y1'], characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
 
 
             }
@@ -451,16 +453,26 @@ $( document ).ready(function() {
         }
     }
 
-    function pulseCharacter(initialWidth, initialHeight){
-        if (averageVolume - volumeCenter > 0){
-            thisCharacterWidth = initialWidth + averageVolume - volumeCenter;
-        } else {
-            thisCharacterWidth = initialWidth;
-        }
-        //set height proportionally to width
-        thisCharacterHeight = thisCharacterWidth * (initialHeight / initialWidth);
+    function pulseCharacter(characterIndex, x, y, initialWidth, initialHeight){
+        ctx.save();
 
-        return thisCharacterWidth;
+        //the pulsing, only if volume is above threshold
+            //set width
+            if (averageVolume - volumeCenter > 0){
+                thisCharacterWidth = initialWidth + (averageVolume - volumeCenter);
+            } else {
+                thisCharacterWidth = initialWidth;
+            }
+            //set height proportionally to width
+            thisCharacterHeight = thisCharacterWidth * (initialHeight / initialWidth);
+
+        //shift to center the character, when it is pulsing size
+        ctx.translate((initialWidth - thisCharacterWidth)/2, (initialHeight - thisCharacterHeight)/2);
+        
+        //draw it!
+        drawCharacter(characters[characterIndex]['imageObject'], x, y, thisCharacterWidth, thisCharacterHeight);
+
+        ctx.restore();
     }
 
     function clear() {
