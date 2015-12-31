@@ -38,7 +38,7 @@ $( document ).ready(function() {
 
     //day variables
     var dayChanged = false;
-    var day = 5;
+    var day = 0;
     // 0
 
     //specific character variables
@@ -83,7 +83,7 @@ $( document ).ready(function() {
         } else if (!characters[9]){
             var plant4 = new Character('plant4', 345, 325);
         } else if (!characters[10]){
-            var can = new Character('can', 20, 490);
+            var can = new Character('can', 150, 480);
         } else if (!characters[11]){
             var kepler1 = new Character('kepler1', 800, 20);
         } else if (!characters[12]){
@@ -269,6 +269,11 @@ $( document ).ready(function() {
                 //bed
                 drawCharacter(characters[5]['imageObject'],characters[5]['imageObject']['x1'],characters[5]['imageObject']['y1'],characters[5]['imageObject']['w'],characters[5]['imageObject']['h']);
 
+                ///can
+                if (day > 0){
+                    drawCharacter(characters[10]['imageObject'],characters[10]['imageObject']['x1'],characters[10]['imageObject']['y1'],characters[10]['imageObject']['w'],characters[10]['imageObject']['h']);
+                }
+
                 //plant1
                 if (day == 1){
                     if (averageVolume - volumeCenter > 0){
@@ -323,6 +328,7 @@ $( document ).ready(function() {
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
 
+                //tomatoes
                 if (day >= 5){
                     //tomatoes
                     pulseCharacter(17, 400, 435, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
@@ -362,7 +368,8 @@ $( document ).ready(function() {
                     pulseCharacter(17, 500, 510, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                     pulseCharacter(17, 502, 460, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                 }
-            }
+            } //end day objects
+
             //nighttime objects
                 if (nightOpacity > 0){
                     //draw night sky
