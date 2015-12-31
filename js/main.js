@@ -38,7 +38,7 @@ $( document ).ready(function() {
 
     //day variables
     var dayChanged = false;
-    var day = 6;
+    var day = 0;
     // 0
 
     //specific character variables
