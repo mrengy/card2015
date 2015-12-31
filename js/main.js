@@ -389,15 +389,16 @@ $( document ).ready(function() {
                 if (day >= 6){
                     //kepler
                     drawCharacter(characters[12]['imageObject'],characters[12]['imageObject']['x1'],characters[12]['imageObject']['y1'],characters[12]['imageObject']['w'],characters[12]['imageObject']['h']);
-                    
+                }
+
+                if (day >= 7){
                     //us
                     var usMaxHeight = 630;
                     if (characters[18]['imageObject']['y1'] > usMaxHeight){
                         characters[18]['imageObject']['y1'] -= usSpeed;
-                        if (characters[18]['imageObject']['y1'] - usMaxHeight < 150 && usSpeed > .17) {
-                            usSpeed -= .17;
-
-                            console.log(usSpeed);
+                        if (characters[18]['imageObject']['y1'] - usMaxHeight < 100 && usSpeed > .23) {
+                            usSpeed -= .23;
+                            //console.log(usSpeed);
                         }
                     }
                     drawCharacter(characters[18]['imageObject'],characters[18]['imageObject']['x1'],characters[18]['imageObject']['y1'],characters[18]['imageObject']['w'],characters[18]['imageObject']['h']);
