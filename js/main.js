@@ -38,7 +38,7 @@ $( document ).ready(function() {
 
     //day variables
     var dayChanged = false;
-    var day = 0;
+    var day = 6;
     // 0
 
     //specific character variables
@@ -83,17 +83,17 @@ $( document ).ready(function() {
         } else if (!characters[9]){
             var plant4 = new Character('plant4', 345, 325);
         } else if (!characters[10]){
-            var can = new Character('can', 150, 480);
+            var can = new Character('can', 150, 510);
         } else if (!characters[11]){
             var kepler1 = new Character('kepler1', 800, 20);
         } else if (!characters[12]){
             var kepler4 = new Character('kepler4', 800, 20);
         } else if (!characters[13]){
-            var lightning = new Character('lightning', 200, 490);
+            var lightning = new Character('lightning', 150, 510);
         } else if (!characters[14]){
             var fry = new Character('fry', 200, 490);
         } else if (!characters[15]){
-            var can_front = new Character('can-front', 20, 490);
+            var can_front = new Character('can-front', 150, 510);
         } else if (!characters[16]){
             var bed_front = new Character('bed-front', 50, 500);
         } else if (!characters[17]){
@@ -368,6 +368,15 @@ $( document ).ready(function() {
                     pulseCharacter(17, 500, 510, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                     pulseCharacter(17, 502, 460, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                 }
+
+                //jumping lightning
+                if (day >= 6){
+                    //lightning
+                    drawCharacter(characters[13]['imageObject'],characters[13]['imageObject']['x1'],characters[13]['imageObject']['y1'],characters[13]['imageObject']['w'],characters[13]['imageObject']['h']);
+                    
+                    //can front
+                    drawCharacter(characters[15]['imageObject'],characters[15]['imageObject']['x1'],characters[15]['imageObject']['y1'],characters[15]['imageObject']['w'],characters[15]['imageObject']['h']);
+                }
             } //end day objects
 
             //nighttime objects
@@ -475,13 +484,13 @@ $( document ).ready(function() {
 
     function pulseStar(index){
         if ((index.thisOpacity < 1) && (index.thisDirection == 'up')){
-            index.thisOpacity += .06 ;
+            index.thisOpacity += .02 ;
         }
         if (index.thisOpacity >= 1){
             index.thisDirection = 'down';
         }
         if ((index.thisOpacity > 0) && (index.thisDirection == 'down')){
-            index.thisOpacity -= .06;
+            index.thisOpacity -= .02;
         }
         if (index.thisOpacity <= 0){
             index.thisDirection = 'up';
