@@ -40,15 +40,15 @@ $( document ).ready(function() {
 
     //day variables
     var dayChanged = false;
-    var day = 4;
+    var day = 0;
     // 0
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
     var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
     var parentLogged = false;
-    var maxSunSpeed = .02;
-    // .02
+    var maxSunSpeed = .01;
+    // .01
     var introOpacity = 1;
 
     //detecting drawing of the static intro screen
@@ -320,19 +320,50 @@ $( document ).ready(function() {
                 if (day >= 4){
                     //plant4
                     drawCharacter(characters[9]['imageObject'],characters[9]['imageObject']['x1'],characters[9]['imageObject']['y1'],characters[9]['imageObject']['w'],characters[9]['imageObject']['h']);
-                    //tomatoes
-                    
-                
-                    
                 }
 
                 //bed front
                 drawCharacter(characters[16]['imageObject'],characters[16]['imageObject']['x1'],characters[16]['imageObject']['y1'],characters[16]['imageObject']['w'],characters[16]['imageObject']['h']);
-                
-                //tomatoes
-                pulseCharacter(17, characters[17]['imageObject']['x1'], characters[17]['imageObject']['y1'], characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
 
+                if (day >= 5){
+                    //tomatoes
+                    pulseCharacter(17, 400, 435, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 405, 425, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 407, 420, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 415, 440, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 420, 430, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 422, 420, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
 
+                    pulseCharacter(17, 522, 380, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 502, 390, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 509, 409, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 526, 406, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 536, 412, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 540, 402, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 542, 418, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 550, 422, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+
+                    pulseCharacter(17, 530, 492, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 542, 502, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 532, 500, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 550, 509, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 540, 519, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 555, 529, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+
+                    pulseCharacter(17, 460, 485, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 455, 475, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 467, 462, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 455, 450, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 460, 480, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 468, 410, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+
+                    pulseCharacter(17, 480, 515, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 485, 495, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 497, 502, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 495, 510, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 500, 510, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                    pulseCharacter(17, 502, 460, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
+                }
             }
             //nighttime objects
                 if (nightOpacity > 0){
@@ -413,7 +444,6 @@ $( document ).ready(function() {
                 ctx.restore();
 
                 introOpacity -= .01;
-                console.log('intro drawn');
 
             ctx.restore();
         }
@@ -459,7 +489,7 @@ $( document ).ready(function() {
         //the pulsing, only if volume is above threshold
             //set width
             if (averageVolume - volumeCenter > 0){
-                thisCharacterWidth = initialWidth + (averageVolume - volumeCenter);
+                thisCharacterWidth = initialWidth + (averageVolume - volumeCenter)*.5;
             } else {
                 thisCharacterWidth = initialWidth;
             }
