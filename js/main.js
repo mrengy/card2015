@@ -90,7 +90,7 @@ $( document ).ready(function() {
         } else if (!characters[11]){
             var kepler1 = new Character('kepler1', 800, 20);
         } else if (!characters[12]){
-            var kepler4 = new Character('kepler4', 800, 20);
+            var kepler4 = new Character('kepler4', 800, 500);
         } else if (!characters[13]){
             var lightning = new Character('lightning', 185, 540);
         } else if (!characters[14]){
@@ -386,7 +386,11 @@ $( document ).ready(function() {
                     pulseCharacter(17, 502, 460, characters[17]['imageObject']['w'],characters[17]['imageObject']['h']);
                 }
 
-                
+                if (day >= 6){
+                    //kepler
+                    drawCharacter(characters[12]['imageObject'],characters[12]['imageObject']['x1'],characters[12]['imageObject']['y1'],characters[12]['imageObject']['w'],characters[12]['imageObject']['h']);
+                }
+
             } //end day objects
 
             //nighttime objects
