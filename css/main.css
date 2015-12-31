@@ -156,11 +156,11 @@ nav a:hover {
 #canvas-container {
     position:relative;
     width:100%;
-    max-width:1800px;
-    height:100%;
+    height:750px;
     margin:0 auto;
     padding:0;
     text-align:center;
+    overflow:hidden;
 }
 
 canvas{
