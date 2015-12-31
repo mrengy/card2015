@@ -548,6 +548,12 @@ $( document ).ready(function() {
                 if ( (characters[13]['imageObject']['y1'] - lightningMaxHeight < 100) && (lightningSpeed < lightningMaxSpeed)) {
                     lightningSpeed += .2;
                 }
+            } else {
+                window.setTimeout(reverseDirection,750);
+
+                function reverseDirection(){
+                    lightningDirection = 'up';
+                }
             }
         }
     }
