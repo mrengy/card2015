@@ -700,7 +700,7 @@ $( document ).ready(function() {
 
     //focus on the browser warning if it exists
     function focusBrowserWarning(){
-        if($('#browserupgrade')){
+        if($('#browserupgrade').is(":visible")){
             $('button#play').removeAttr('autofocus');
             $('#browserupgrade').attr('autofocus','autofocus');
         }
