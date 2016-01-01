@@ -417,10 +417,9 @@ $( document ).ready(function() {
 
                     //words
                     ctx.save();
-                    ctx.fillStyle = '#FC0509';
+                    ctx.fillStyle = 'gray';
                     ctx.fillText('Happy New Year!', WIDTH-50, 80);
                     ctx.font = "24pt Arial, 'Helvetica Neue', Helvetica, sans-serif";
-                    ctx.fillStyle = '#147D3E';
                     ctx.fillText("Here's to another year full of love", WIDTH-50,150);
                     ctx.fillText("and home grown tomatoes",WIDTH-50,185);
                     ctx.font = "12pt Arial, 'Helvetica Neue', Helvetica, sans-serif";
