@@ -503,6 +503,14 @@ $( document ).ready(function() {
                 drawCharacter(characters[1]['imageObject'],(-characters[1]['imageObject']['w']*2),15,characters[1]['imageObject']['w']*2,characters[1]['imageObject']['h']*2);
                 ctx.restore();
 
+                //words
+                ctx.save();
+                ctx.fillStyle = 'gray';
+                ctx.textAlign = 'center';
+                ctx.font = "24pt Arial, 'Helvetica Neue', Helvetica, sans-serif";
+                ctx.fillText("A New Year's greeting", 500, 80);
+                ctx.restore();
+                
                 //draw white background above tomato vines
                 ctx.save();
                 ctx.fillStyle = 'rgba(255,255,255,'+(1-introOpacity)+')';
@@ -512,6 +520,9 @@ $( document ).ready(function() {
                 introOpacity -= .01;
 
             ctx.restore();
+
+            
+
         }
     }
 
