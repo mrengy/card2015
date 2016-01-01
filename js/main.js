@@ -43,8 +43,7 @@ $( document ).ready(function() {
 
     //specific character variables
     var orbit = {centerX:410, centerY:500, radius:600, angle:129.7};
-    var sunParent = {x: 34.54885235659708, y:31.9867141487843,speed:.0005};
-    var parentLogged = false;
+    var sunParent = {x0: 34.54885235659708, x: 34.54885235659708, y0:31.9867141487843, y:31.9867141487843,speed:.0005};
     var maxSunSpeed = .01;
     // .01
     var introOpacity = 1;
@@ -55,6 +54,7 @@ $( document ).ready(function() {
     //detecting start and end
     var introScreenDrawn = false;
     var lastDay = 7;
+    var sunSlowingRange = 20;
 
     //detecting start of song after the musical intro
     var numPeaks = 0;
@@ -233,7 +233,7 @@ $( document ).ready(function() {
         //draw characters
             if (songIntroDone == false) {
                 detectSongIntroDone();
-            } else if (day < lastDay) { //run only if songIntroDone is true
+            } else if ((day < lastDay) || (sunParent.x0 - sunParent.x > sunSlowingRange) || (sunParent.y - sunParent.y0 > sunSlowingRange)  ) { //run only if songIntroDone is true
                 //for detecting day change
                 var nightOpacity = setNightOpacity();
 
@@ -246,18 +246,25 @@ $( document ).ready(function() {
                 
                 //ease sun speed
                 if (sunParent.speed < maxSunSpeed){
-                sunParent.speed += .0005;
+                    sunParent.speed += .0005;
                 }
 
-                if (parentLogged == false){
-                    parentLogged = true;
-                }
                 //detect day change
                 if ((nightOpacity > 0) && (prevSunHeight >= sunParent.y) && (dayChanged == false)){
                     day ++;
                     dayChanged = true;
                 } else if ((nightOpacity <= 0) && (prevSunHeight <= sunParent.y) && (dayChanged == true)){
                     dayChanged = false;
+                }
+            } else {
+                //slowing and then stopping the sun
+                sunParent.x = orbit.centerX + Math.cos(orbit.angle) * orbit.radius;
+                sunParent.y = orbit.centerY + Math.sin(orbit.angle) * orbit.radius;
+                orbit.angle += sunParent.speed;
+                
+                //ease sun speed
+                if (sunParent.speed > 0){
+                    sunParent.speed -= .0005;
                 }
             }
 
