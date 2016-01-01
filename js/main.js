@@ -692,10 +692,19 @@ $( document ).ready(function() {
     }
 
     //RUN FUNCTIONS
+    focusBrowserWarning();
     loadImages();
     init();
     setupAudioNodes();
     createStars(30);
+
+    //focus on the browser warning if it exists
+    function focusBrowserWarning(){
+        if($('#browserupgrade').is(":visible")){
+            $('button#play').removeAttr('autofocus');
+            $('#browserupgrade').attr('autofocus','autofocus');
+        }
+    }
 
     // when the javascript node is called
     // we use information from the analyzer node
